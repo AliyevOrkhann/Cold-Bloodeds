@@ -62,21 +62,4 @@ public class User {
         }
         return false;
     }
-
-
-    public static void main(String[] args) {
-        User.register("Ismayil Huseynov", "complicatedpassword");
-        User.register("Babek Aliyev", "difficult password");
-        User.register("Orkhan", "my password");
-
-        User.login("Ismayil Huseynov", "complicatedpassword");
-    }
-   /** public String getUsername() {
-        return username;
-    }
-    public String getPassword() {
-        return password;
-    }
-    */
-    
 }
