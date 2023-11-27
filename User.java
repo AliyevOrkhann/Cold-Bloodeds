@@ -12,6 +12,7 @@ public class User {
     public User(String username, String password) {
         this.username = username;
         this.password = password;
+        register(username, password);
     }
     
     public static boolean register (String username, String password) {
@@ -38,6 +39,7 @@ public class User {
                 String[] userInfo = line.split(",");
                 if(userInfo.length == 2 && userInfo[0].equals(username) && userInfo[1].equals(password)) {
                     System.out.println("Login successful.");
+                    return true;
                 }
             }
         } catch (IOException e) {
