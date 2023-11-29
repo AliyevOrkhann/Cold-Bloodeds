@@ -19,10 +19,25 @@ public class MovieDatabase {
         } 
     }
 
+    public static void addMovie(String title, String director, int releaseYear, int runningTime){
+        Movie m=new Movie(title, director, releaseYear, runningTime);
+        movies.add(m);
+
+        File path=new File("movies_database.txt");
+        try (FileWriter fw=new FileWriter(path, true)) {
+            fw.write("Title: " + title+"\n" + "Director: " + director+"\n" + "ReleaseYear: " + releaseYear +"\n"+"Running Time: "
+            + runningTime +" minutes"+"\n"+"\n");
+
+        } catch (Exception e) {
+            System.out.println("Something went wrong: "+e.getMessage());
+        } 
+    }
+
     public static void retrieveMovie(Movie m){
         System.out.println("Title: "+m.getTitle());
         System.out.println("Director: "+m.getDirector());
         System.out.println("Release Year: "+m.getReleaseYear());
         System.out.println("Running Time: "+m.getRunningTime()+" minutes");
     }
+
 }
