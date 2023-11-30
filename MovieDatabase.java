@@ -32,7 +32,14 @@ public class MovieDatabase {
             System.out.println("Something went wrong: "+e.getMessage());
         } 
     }
-
+  
+    public static void retrieveMovie(Movie m){
+        System.out.println("Title: "+m.getTitle());
+        System.out.println("Director: "+m.getDirector());
+        System.out.println("Release Year: "+m.getReleaseYear());
+        System.out.println("Running Time: "+m.getRunningTime()+" minutes");
+    }
+  
     public static void removeMovie(Movie m){
         movies.remove(m);
         File path=new File("movies_database.txt");
@@ -62,12 +69,5 @@ public class MovieDatabase {
         finally{
             temp.delete();
         }
-    }
-
-    public static void retrieveMovie(Movie m){
-        System.out.println("Title: "+m.getTitle());
-        System.out.println("Director: "+m.getDirector());
-        System.out.println("Release Year: "+m.getReleaseYear());
-        System.out.println("Running Time: "+m.getRunningTime()+" minutes");
     }
 }
