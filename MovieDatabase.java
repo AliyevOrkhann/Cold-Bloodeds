@@ -2,35 +2,40 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.util.LinkedHashSet;
+import java.util.ArrayList;
 
 public class MovieDatabase {
-    static LinkedHashSet<Movie> movies=new LinkedHashSet<>();
+    static ArrayList<Movie> movies=new ArrayList<>();
     
     public static void addMovie(Movie m){
-        movies.add(m);
-        File path=new File("movies_database.txt");
-        try (FileWriter fw=new FileWriter(path, true)) {
-            fw.write("Title: " +m.getTitle()+"\n" + "Director: " + m.getDirector()+"\n" + "ReleaseYear: " + m.getReleaseYear() +"\n"+"Running Time: "
-            + m.getRunningTime() +" minutes"+"\n"+"\n");
-            
-        } catch (Exception e) {
-            System.out.println("Something went wrong: "+e.getMessage());
-        } 
+        if(ifExist(m))System.out.println("----------Movie: "+m.getTitle()+" is already in the database-----------");
+        else{
+            movies.add(m);
+            File path=new File("movies_database.txt");
+            try (FileWriter fw=new FileWriter(path, true)) {
+                fw.write("Title: " +m.getTitle()+"\n" + "Director: " + m.getDirector()+"\n" + "ReleaseYear: " + m.getReleaseYear() +"\n"+"Running Time: "
+                + m.getRunningTime() +" minutes"+"\n"+"\n");
+                
+            } catch (Exception e) {
+                System.out.println("Something went wrong: "+e.getMessage());
+            } 
+        }
     }
 
     public static void addMovie(String title, String director, int releaseYear, int runningTime){
         Movie m=new Movie(title, director, releaseYear, runningTime);
-        movies.add(m);
+        if(ifExist(m))System.out.println("----------Movie: "+m.getTitle()+" is already in the database-----------");
+        else{
+            movies.add(m);
+            File path=new File("movies_database.txt");
+            try (FileWriter fw=new FileWriter(path, true)) {
+                fw.write("Title: " + title+"\n" + "Director: " + director+"\n" + "ReleaseYear: " + releaseYear +"\n"+"Running Time: "
+                + runningTime +" minutes"+"\n"+"\n");
 
-        File path=new File("movies_database.txt");
-        try (FileWriter fw=new FileWriter(path, true)) {
-            fw.write("Title: " + title+"\n" + "Director: " + director+"\n" + "ReleaseYear: " + releaseYear +"\n"+"Running Time: "
-            + runningTime +" minutes"+"\n"+"\n");
-
-        } catch (Exception e) {
-            System.out.println("Something went wrong: "+e.getMessage());
-        } 
+            } catch (Exception e) {
+                System.out.println("Something went wrong: "+e.getMessage());
+            } 
+        }
     }
   
     public static void retrieveMovie(Movie m){
@@ -70,4 +75,22 @@ public class MovieDatabase {
             temp.delete();
         }
     }
+
+    private static boolean ifExist(Movie m) {
+        File path=new File("movies_database.txt");
+        try (BufferedReader br=new BufferedReader(new FileReader(path))) {
+            String line;
+            while((line=br.readLine())!=null){
+               if((line.equals("Title: " + m.getTitle()))){
+                    return true;
+               }
+            }
+            return false;
+        } catch (Exception e) {
+            System.out.println("Something went wrong: "+e.getMessage());
+            return false;
+        } 
+    }
 }
+
+
