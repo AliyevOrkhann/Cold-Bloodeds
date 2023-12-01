@@ -75,4 +75,22 @@ public class MovieDatabase {
             temp.delete();
         }
     }
+
+    private static boolean ifExist(Movie m) {
+        File path=new File("movies_database.txt");
+        try (BufferedReader br=new BufferedReader(new FileReader(path))) {
+            String line;
+            while((line=br.readLine())!=null){
+               if((line.equals("Title: " + m.getTitle()))){
+                    return true;
+               }
+            }
+            return false;
+        } catch (Exception e) {
+            System.out.println("Something went wrong: "+e.getMessage());
+            return false;
+        } 
+    }
 }
+
+
