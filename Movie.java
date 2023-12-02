@@ -55,5 +55,10 @@ public class Movie{
             return false;
         return true;
     }
+
+
+    public Object getDetails() {
+        return null;
+    }
     
 }

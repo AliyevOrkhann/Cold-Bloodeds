@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MovieDatabase {
     static ArrayList<Movie> movies=new ArrayList<>();
@@ -90,6 +91,14 @@ public class MovieDatabase {
             System.out.println("Something went wrong: "+e.getMessage());
             return false;
         } 
+    }
+
+    public static MovieDatabase loadFromFile(String string) {
+        return null;
+    }
+
+    public List<Movie> getMovies(Object object) {
+        return null;
     }
 }
 
