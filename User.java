@@ -3,6 +3,7 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 
 
 public class User {
@@ -63,5 +64,15 @@ public class User {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public void addToWatchListButton(Movie selectedMovie) {
+    }
+
+    public void removeFromWatchlist(Movie selectedMovie) {
+    }
+
+    public List<Movie> getWatcList() {
+        return null;
     }
 }
