@@ -4,6 +4,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 public class MovieDatabase {
     static ArrayList<Movie> movies=new ArrayList<>();
@@ -93,6 +95,14 @@ public class MovieDatabase {
         } 
     }
 
+    private static List<Movie> getMoviesFromYear(int year){
+        var movieFrom = movies.stream()
+                        .filter(n->n.getReleaseYear()==year)
+                        .collect(Collectors.toList());
+        if(movieFrom.isEmpty())throw new NoSuchElementException("No Movie from "+year+" is found in the database");
+        return movieFrom;
+    }
+
     public static MovieDatabase loadFromFile(String string) {
         return null;
     }
@@ -101,5 +111,3 @@ public class MovieDatabase {
         return null;
     }
 }
-
-
