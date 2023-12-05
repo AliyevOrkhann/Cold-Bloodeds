@@ -22,7 +22,7 @@ public class MovieAppGUI {
         frame.setSize(600, 800);
 
         JPanel moviePanel = new JPanel(new GridLayout(0,1));
-        List<Movie>movies = movieDatabase.getMovies(null);
+        List<Movie>movies = movieDatabase.getMovies();
         for(Movie movie : movies) {
             JButton movieButton = new JButton(movie.getTitle());
             movieButton.addActionListener(new ActionListener(){
@@ -94,7 +94,7 @@ public class MovieAppGUI {
     }
 
     public static void main(String[] args) {
-        User user = new User("username", "password");
+        User user = new User("usename", "password");
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 new MovieAppGUI(user);

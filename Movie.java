@@ -57,8 +57,12 @@ public class Movie{
     }
 
 
-    public Object getDetails() {
-        return null;
+    public String getDetails() {
+        return "Title: " + title + 
+        "\nDirector: " + director + 
+        "\nRelease Year: " + releaseYear +
+        "\nRunning Time: " + runningTime + " minutes"
+        ;
     }
     
 }

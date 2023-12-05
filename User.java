@@ -3,17 +3,19 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class User {
     private String username;
     private String password;
+    private List<Movie> watchList;
 
     public User(String username, String password) {
         this.username = username;
         this.password = password;
-        register(username, password);
+        this.watchList = new ArrayList<>();
     }
     
     public static boolean register (String username, String password) {
@@ -67,12 +69,14 @@ public class User {
     }
 
     public void addToWatchListButton(Movie selectedMovie) {
+        watchList.add(selectedMovie);
     }
 
     public void removeFromWatchlist(Movie selectedMovie) {
+        watchList.remove(selectedMovie);
     }
 
     public List<Movie> getWatcList() {
-        return null;
+        return watchList;
     }
 }
