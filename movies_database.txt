@@ -1,9 +1,24 @@
-Title: Blade Runner
-Director: Ismayil
-ReleaseYear: 2010
-Running time: 123 minutes
+Title: The Godfather
+Director:  Francis Ford Coppola
+ReleaseYear: 1994
+Running Time: 142 minutes
 
-Title: Blade Run2ner
-Director: Isma12yil
-ReleaseYear: 2011
-Running time: 123 minutes
+Title: The Dark Knight
+Director:  Christopher Nolan
+ReleaseYear: 2008
+Running Time: 152 minutes
+
+Title: Blade The Lord of the Rings: The Return of the King
+Director:  Peter Jackson
+ReleaseYear: 2003
+Running Time: 201 minutes
+
+Title: Blade The Matrix
+Director:  Lana Wachowski
+ReleaseYear: 1999
+Running Time: 136 minutes
+
+Title: Fight Club
+Director:  David Fincher
+ReleaseYear: 1999
+Running Time: 139 minutes
