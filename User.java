@@ -68,7 +68,7 @@ public class User {
         return false;
     }
 
-    public void addToWatchListButton(Movie selectedMovie) {
+    public void addToWatchList(Movie selectedMovie) {
         watchList.add(selectedMovie);
     }
 
@@ -76,7 +76,9 @@ public class User {
         watchList.remove(selectedMovie);
     }
 
-    public List<Movie> getWatcList() {
+    public List<Movie> getWatchList() {
         return watchList;
     }
+
+   
 }
