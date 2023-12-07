@@ -7,6 +7,7 @@ import java.util.List;
 public class MovieAppGUI {
     private JFrame frame;
     private MovieDatabase movieDatabase;
+    private static JTabbedPane tabbedPane;
     private static User currentUser;
     private JPanel movieListPanel;
     private JPanel watchlistPanel;
@@ -23,9 +24,18 @@ public class MovieAppGUI {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 600);
 
+        tabbedPane = new JTabbedPane();
+
+        JPanel userPanel = createUserPanel();
+        tabbedPane.addTab("User", userPanel);
+
+        JPanel tabPanel = new JPanel();
+        tabPanel.setLayout(new BorderLayout());
+
         movieListPanel = new JPanel(new GridLayout(0,1));
         watchlistPanel = new JPanel(new GridLayout(0,1));
         detailsPanel = new JPanel(new GridLayout(0,1));
+
 
         List<Movie> movies = movieDatabase.getMovies();
         for (Movie movie : movies) {
@@ -49,8 +59,60 @@ public class MovieAppGUI {
         JSplitPane rightSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, splitPane, watchScrollPane);
         rightSplitPane.setResizeWeight(0.8);
 
-        frame.getContentPane().add(rightSplitPane);
+        tabPanel.add(movieListPanel, BorderLayout.NORTH);
+        tabPanel.add(watchlistPanel, BorderLayout.EAST);
+        tabPanel.add(detailsPanel, BorderLayout.CENTER);
+
+        tabbedPane.addTab("Every", tabPanel);
+
+        frame.getContentPane().add(tabbedPane);
         frame.setVisible(true);
+    }
+
+    private static JPanel createUserPanel() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(4, 2));
+
+        JTextField usernameField = new JTextField();
+        JTextField passwordField = new JPasswordField();
+        JButton registerButton = new JButton("Register");
+        JButton loginButton = new JButton("Login");
+
+        panel.add(new JLabel("Username:"));
+        panel.add(usernameField);
+        panel.add(new JLabel("Password:"));
+        panel.add(passwordField);
+        panel.add(registerButton);
+        panel.add(loginButton);
+
+        registerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String username = usernameField.getText();
+                String password = passwordField.getText();
+
+                if (User.register(username, password)) {
+
+                    usernameField.setText("");
+                    passwordField.setText("");
+                }
+            }
+        });
+
+        loginButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String username = usernameField.getText();
+                String password = passwordField.getText();
+
+                if (User.login(username, password)) {
+
+                    usernameField.setText("");
+                    passwordField.setText("");
+                }
+            }
+        });
+        return panel;
     }
 
     private void showMovieDetails(Movie movie) {
