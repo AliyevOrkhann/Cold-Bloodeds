@@ -5,8 +5,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-//import java.util.NoSuchElementException;
-//import java.util.stream.Collectors;
+import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 public class MovieDatabase {
     private List<Movie> movies;
@@ -79,14 +79,14 @@ public class MovieDatabase {
         }
     }
 
-    /** private static List<Movie> getMoviesFromYear(int year){
+    private static List<Movie> getMoviesFromYear(int year, List<Movie> movies){
         var movieFrom = movies.stream()
                         .filter(n->n.getReleaseYear()==year)
                         .collect(Collectors.toList());
         if(movieFrom.isEmpty())throw new NoSuchElementException("No Movie from "+year+" is found in the database");
         return movieFrom;
     }
-    **/
+
 
     private List<Movie> loadFromFile(String fileName) {
         List<Movie> loadedMovies = new ArrayList<>();
