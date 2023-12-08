@@ -1,5 +1,8 @@
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -27,6 +30,8 @@ public class User {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("users_database.txt", true))) {
             writer.write(username + "," + password + "\n");
             System.out.println("User registered successfully.");
+            String path="DataBase/"+username+".dat";
+            FileOutputStream fos=new FileOutputStream(new File(path));
             return true;
         } catch (IOException e) {
             System.out.println("Error happened during registration");
@@ -80,5 +85,8 @@ public class User {
         return watchList;
     }
 
+    public String getUsername() {
+        return username;
+    }
    
 }
