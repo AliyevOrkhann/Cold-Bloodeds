@@ -109,6 +109,7 @@ public class MovieAppGUI {
 
                     usernameField.setText("");
                     passwordField.setText("");
+                    new UserLoginWindow();
                 }
             }
         });
