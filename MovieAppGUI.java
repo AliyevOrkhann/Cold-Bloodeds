@@ -8,8 +8,7 @@ public class MovieAppGUI {
     private static JTabbedPane tabbedPane;
     private static User currentUser;
 
-    public MovieAppGUI(User user) {
-        MovieAppGUI.currentUser = user;
+    public MovieAppGUI() {
         initialize();
     }
 
@@ -61,6 +60,7 @@ public class MovieAppGUI {
             public void actionPerformed(ActionEvent e) {
                 String username = usernameField.getText();
                 String password = passwordField.getText();
+                MovieAppGUI.currentUser = new User(username, password);
 
                 if (User.login(username, password)) {
                     frame.dispose();
@@ -72,10 +72,9 @@ public class MovieAppGUI {
     }
 
     public static void main(String[] args) {
-        User user = new User("username", "password");
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                new MovieAppGUI(user);
+                new MovieAppGUI();
             }
         });
     }
