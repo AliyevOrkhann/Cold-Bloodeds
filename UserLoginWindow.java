@@ -2,6 +2,9 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -18,7 +21,7 @@ public class UserLoginWindow{
     private MovieDatabase movieDatabase;
 
     UserLoginWindow(User currentUser){
-        JFrame frame = new JFrame("Home Page");
+        JFrame frame = new JFrame(currentUser.getUsername()+" welcome<3");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 600);
 
@@ -98,6 +101,12 @@ public class UserLoginWindow{
             @Override
             public void actionPerformed(ActionEvent e) {
                 currentUser.addToWatchList(movie);
+                File path = new File("Database/"+currentUser.getUsername()+".dat");
+                try (FileWriter fw = new FileWriter(path, true)) {
+                fw.write(movie.getDetails()+"\n");
+                } catch (Exception exception) {
+                System.out.println("Something went wrong: " + exception.getMessage());
+                }
                 updateWatchlistPanel(currentUser);
             }
         });

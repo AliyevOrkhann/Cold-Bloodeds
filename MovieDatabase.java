@@ -34,7 +34,7 @@ public class MovieDatabase {
     private void saveToFile(Movie m) {
         File path = new File("movies_database.txt");
         try (FileWriter fw = new FileWriter(path, true)) {
-            fw.write("Title: " + m.getTitle() + "\n" + "Director: " + m.getDirector() + "\n" + "ReleaseYear: " + 
+            fw.write("Title: " + m.getTitle() + "\n" + "Director: " + m.getDirector() + "\n" + "Release Year: " + 
             m.getReleaseYear() + "\n" + "Running Time: " + m.getRunningTime() + " minutes" + "\n\n");
         } catch (Exception e) {
             System.out.println("Something went wrong: " + e.getMessage());
@@ -44,7 +44,7 @@ public class MovieDatabase {
     public void retrieveMovie(Movie m){
         System.out.println("Title: "+m.getTitle());
         System.out.println("Director: "+m.getDirector());
-        System.out.println("ReleaseYear: "+m.getReleaseYear());
+        System.out.println("Release Year: "+m.getReleaseYear());
         System.out.println("Running Time: "+m.getRunningTime()+" minutes");
     }
   
@@ -88,7 +88,7 @@ public class MovieDatabase {
     }
 
 
-    private List<Movie> loadFromFile(String fileName) {
+    public static List<Movie> loadFromFile(String fileName) {
         List<Movie> loadedMovies = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
             String line;
@@ -99,8 +99,8 @@ public class MovieDatabase {
                         title = line.substring(7);
                     } else if (line.startsWith("Director: ")) {
                         director = line.substring(11);
-                    } else if (line.startsWith("ReleaseYear: ")) {
-                        releaseYear = Integer.parseInt(line.substring(13));
+                    } else if (line.startsWith("Release Year: ")) {
+                        releaseYear = Integer.parseInt(line.substring(14));
                     } else if (line.startsWith("Running Time: ")) {
                         runningTime = Integer.parseInt(line.substring(14).split(" ")[0]);
 

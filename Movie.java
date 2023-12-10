@@ -61,7 +61,7 @@ public class Movie{
         return "Title: " + title + 
         "\nDirector: " + director + 
         "\nRelease Year: " + releaseYear +
-        "\nRunning Time: " + runningTime + " minutes";
+        "\nRunning Time: " + runningTime + " minutes\n";
 
     }
     
