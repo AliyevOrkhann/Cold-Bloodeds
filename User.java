@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -79,9 +78,39 @@ public class User {
 
     public void removeFromWatchlist(Movie selectedMovie) {
         watchList.remove(selectedMovie);
+        File path=new File("DataBase/"+username+".dat");
+        File temp=new File("DataBase/"+username+"backup.dat");
+        try (FileWriter fw=new FileWriter(temp);
+            BufferedReader br=new BufferedReader(new FileReader(path))) {
+            String line;
+            while((line=br.readLine())!=null){
+               if((line.contains("Title: " + selectedMovie.getTitle()))){
+                    for(int i=0;i<5;i++){
+                        line=br.readLine();
+                    }
+               }
+               if(line!=null)fw.write(line+"\n");
+            }
+        } catch (Exception e) {
+            System.out.println("Something went wrong: "+e.getMessage());
+        } 
+        try (FileWriter fw=new FileWriter(path);BufferedReader br=new BufferedReader(new FileReader(temp))) {
+            String line;
+            while((line=br.readLine())!=null){
+               fw.write(line+"\n");
+
+            }
+        } catch (Exception e) {
+            System.out.println("Something went wrong: "+e.getMessage());
+        } 
+        finally{
+            temp.delete();
+        }
+
     }
 
     public List<Movie> getWatchList() {
+        watchList = MovieDatabase.loadFromFile("DataBase/"+username+".dat");
         return watchList;
     }
 

@@ -34,6 +34,7 @@ public class UserLoginWindow{
         watchlistPanel = new JPanel(new GridLayout(0,1));
         detailsPanel = new JPanel(new GridLayout(0,1));
 
+        updateWatchlistPanel(currentUser);
         List<Movie> movies = movieDatabase.getMovies();
         for (Movie movie : movies) {
             JButton movieButton = new JButton(movie.getTitle());

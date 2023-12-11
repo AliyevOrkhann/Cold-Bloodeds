@@ -40,7 +40,7 @@ public class MovieDatabase {
             System.out.println("Something went wrong: " + e.getMessage());
         }
     }
-  
+
     public void retrieveMovie(Movie m){
         System.out.println("Title: "+m.getTitle());
         System.out.println("Director: "+m.getDirector());
@@ -120,5 +120,4 @@ public class MovieDatabase {
         return loadedMovies;
     }
 
-    
 }
