@@ -6,8 +6,6 @@ import java.awt.event.ActionListener;
 public class MovieAppGUI {
     private static JFrame frame;
     private static JPanel userPanel;
-    private static JTabbedPane tabbedPane;
-    private static User currentUser;
 
     public MovieAppGUI() {
         initialize();
@@ -16,138 +14,173 @@ public class MovieAppGUI {
     private void initialize() {
         frame = new JFrame("ColdBloodex");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 600);
-        //frame.getContentPane().setBackground(Color.BLACK);
+        frame.setSize(1200, 800);
 
-        JLabel background = new JLabel(new ImageIcon("background_photo.jpg"));
-        background.setLayout(new GridBagLayout());
-        background.setSize(frame.getSize());
-        frame.setContentPane(background);
-        frame.setLayout(new BorderLayout());
-        
-        
-        //tabbedPane = new JTabbedPane();
+        JPanel mainPanel = new JPanel(new BorderLayout());
 
-        userPanel = createUserPanel();
-        background.add(userPanel, BorderLayout.CENTER);
-        frame.add(userPanel);
+        JPanel upperPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                g.setColor(Color.BLACK);
+                g.fillRect(0, 0, getWidth(), getHeight());
+                g.setColor(new Color(173,216,230));
+                g.setFont(new Font("Arial", Font.BOLD, 30));
+
+                int textPadding = 40;
+                int textYCoordinate = getHeight() / 4 + textPadding;
+                g.drawString("ColdBloodex                                                                                   Login / Register ", 30, textYCoordinate);
+            }
+        };
+        upperPanel.setPreferredSize(new Dimension(frame.getWidth(), frame.getHeight() / 5));
+        
+
+        
+        JPanel lowerPanel = new JPanel(new BorderLayout()) {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                g.setColor(Color.BLACK);
+                g.fillRect(0, 0, getWidth(), getHeight());
+                g.setColor(Color.WHITE);
+                g.setFont(new Font("Verdana", Font.PLAIN, 12));
+
+                FontMetrics metrics = g.getFontMetrics();
+                String text = "@2023 ColdBloodex. All Rights Reserved. | Created by Orkhan, Babek & Ismayil";
+                int textWidth = metrics.stringWidth(text);
+                int textHeight = metrics.getHeight();
+
+                int x = (getWidth() - textWidth) / 2;
+                int y = (getHeight() - textHeight) / 2 + metrics.getAscent();
+
+                g.drawString(text, x, y);
+                
+            }
+        };
+        lowerPanel.setPreferredSize(new Dimension(frame.getWidth(), frame.getHeight() / 12 + 5));
+
+        JPanel centerPanel = new JPanel(new GridBagLayout()) {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                ImageIcon background = new ImageIcon("background-gs7hjuwvv2g0e9fj.jpg");
+                g.drawImage(background.getImage(), 0, 0, getWidth(), getHeight(), this);
+
+                g.setColor(new Color(0,0,0,150));
+                g.fillRect(0, 0, getWidth(), getHeight());
+            }
+        };
+        centerPanel.setLayout(new GridBagLayout());
+        centerPanel.setOpaque(true);
+
+        
+
+        JPanel authPanel = createUserPanel();
+        GridBagConstraints authPanelConstraints = new GridBagConstraints();
+        authPanelConstraints.gridx = 0;
+        authPanelConstraints.gridy = 0;
+        authPanelConstraints.weightx = 1.0;
+        authPanelConstraints.weighty = 1.0;
+        authPanelConstraints.fill = GridBagConstraints.BOTH;
+
+        centerPanel.add(Box.createGlue(), authPanelConstraints);
+        authPanelConstraints.gridy++;
+        centerPanel.add(authPanel, authPanelConstraints);
+        centerPanel.add(Box.createGlue(), authPanelConstraints);
+
+           
+        //centerPanel.add(authPanel, BorderLayout.EAST);
+        mainPanel.add(upperPanel, BorderLayout.NORTH);
+        mainPanel.add(centerPanel, BorderLayout.CENTER);
+        mainPanel.add(lowerPanel, BorderLayout.SOUTH);
+
+        frame.setContentPane(mainPanel);
         frame.setVisible(true);
-       
     }
 
     private static JPanel createUserPanel() {
-        JPanel panel = new JPanel();
+        JPanel panel = new JPanel(new GridBagLayout());
         panel.setOpaque(false);
-
-        panel.setLayout(new GridLayout());
-        
-        panel.setBackground(Color.BLACK);
-
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.weightx = 0.5;
-        gbc.anchor = GridBagConstraints.NORTHWEST;
         gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.anchor = GridBagConstraints.CENTER;
 
-        JPanel leftPanel = new JPanel(new GridBagLayout());
-        leftPanel.setBackground(Color.BLACK);
-        leftPanel.setForeground(Color.WHITE);
-        leftPanel.setPreferredSize(new Dimension(frame.getWidth()/2, frame.getHeight()));
+        JButton loginButton = new JButton("Login");
+        JButton registerButton = new JButton("Register");
 
+        Dimension buttonSize = new Dimension(350, 40);
+        loginButton.setPreferredSize(buttonSize);
+        registerButton.setPreferredSize(buttonSize);
+
+        loginButton.setBackground(new Color(173, 216, 230));
+        loginButton.setForeground(Color.BLACK);
+        registerButton.setBackground(new Color(173, 216, 230));
+        registerButton.setForeground(Color.BLACK);
         
-        
-        JLabel nameLabel = new JLabel("ColdBloodex");
-        nameLabel.setFont(new Font("Arial", Font.BOLD, 36));
-        nameLabel.setForeground(new Color(173, 216, 230));
-        panel.add(nameLabel, gbc);
+        JLabel usernameLabel = new JLabel("Username");
+        usernameLabel.setForeground(Color.WHITE);
+        usernameLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        usernameLabel.setPreferredSize(buttonSize);
 
-        gbc.gridy++;
-        JLabel marketingLabel = new JLabel("Sign In / Register");
-        marketingLabel.setFont(new Font("Arial", Font.PLAIN, 18));
-        marketingLabel.setForeground(new Color(173, 216, 230));
-        leftPanel.add(marketingLabel, gbc);
+        JLabel passwordLabel = new JLabel("Password");
+        passwordLabel.setForeground(Color.WHITE);
+        passwordLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        passwordLabel.setPreferredSize(buttonSize);
 
-        JPanel rightPanel = new JPanel(new GridBagLayout());
-        rightPanel.setBackground(Color.BLACK);
-        rightPanel.setForeground(Color.WHITE);
-        rightPanel.setPreferredSize(new Dimension(frame.getWidth()/ 2, frame.getHeight()));
+        JTextField usernameField = new JTextField(20);
+        usernameField.setText("Username");
+        usernameField.setBackground(Color.BLACK);
+        usernameField.setForeground(Color.WHITE);
+        usernameField.add(usernameLabel);  
+
+        JPasswordField passwordField = new JPasswordField(20);
+        passwordField.setText("Password");
+        passwordField.setBackground(Color.BLACK);
+        passwordField.setForeground(Color.WHITE);
+        passwordField.add(passwordLabel);
+
+        Dimension textFieldSize = new Dimension(350, 40);
+        usernameField.setPreferredSize(textFieldSize);
+        passwordField.setPreferredSize(textFieldSize);
 
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.insets = new Insets(5, 5, 5, 5);
 
-        JTextField usernameField = new JTextField();
-        JTextField passwordField = new JPasswordField();
-        JButton registerButton = new JButton("Register");
-        JButton loginButton = new JButton("Login");
+        panel.add(usernameField, gbc);
+        gbc.gridy++;
+        panel.add(passwordField, gbc);
+        gbc.gridy++;
+        panel.add(loginButton, gbc);
+        gbc.gridy++;
+        panel.add(registerButton, gbc);
 
-        usernameField.setBorder(BorderFactory.createTitledBorder("Username"));
-        passwordField.setBorder(BorderFactory.createTitledBorder("Password"));
-
-        registerButton.setBackground(new Color(173, 216, 230));
-        registerButton.setForeground(Color.BLACK);
-        loginButton.setBackground(new Color(173, 216, 230));
-        loginButton.setForeground(Color.BLACK);
-
-        Dimension buttonSize = new Dimension(120,30);
-        loginButton.setPreferredSize(buttonSize);
-        registerButton.setPreferredSize(buttonSize);
-
-
+        //JLabel registerLabel = new JLabel("Register");
+        //registerLabel.setForeground(Color.WHITE);
+        //registerLabel.setFont(new Font("Arial", Font.BOLD, 20));
         
-        rightPanel.add(usernameField, gbc);
-        gbc.gridy++;
-        rightPanel.add(passwordField, gbc);
-        gbc.gridy++;
-        rightPanel.add(loginButton, gbc);
-        gbc.gridy++;
-        rightPanel.add(registerButton, gbc);
-       
+        //registerLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 180, 0));
 
-        //Insets textFieldInsets = new Insets(5, 10, 5, 10);
-        //usernameField.setMargin(textFieldInsets);
-        //passwordField.setMargin(textFieldInsets);
-        
-        //registerButton.addActionListener(new ActionListener() {
-          //  @Override
-            //public void actionPerformed(ActionEvent e) {
-              //  String username = usernameField.getText();
-                //String password = passwordField.getText();
+        JPanel shadedPanel = new JPanel(new BorderLayout()) {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                g.setColor(new Color(0,0,0,150));
+                g.fillRect(0, 0, getWidth(), getHeight());
+            }
+        };
+        //shadedPanel.add(registerLabel, BorderLayout.CENTER);
+        GridBagConstraints shadedConstraints = new GridBagConstraints();
 
-             //   if (User.register(username, password)) {
-               //     usernameField.setText("");
-                 //   passwordField.setText("");
-               // }
-           // }
-       // });
-
-   //     loginButton.addActionListener(new ActionListener() {
-    //        @Override
-       //     public void actionPerformed(ActionEvent e) {
-       //         String username = usernameField.getText();
-        //        String password = passwordField.getText();
-        //        MovieAppGUI.currentUser = new User(username, password);
-
-           //     if (User.login(username, password)) {
-            //        frame.dispose();
-             //       new UserLoginWindow(currentUser);
-          //      }
-        //    }
-    //    });
-    
-    panel.add(leftPanel);
-    panel.add(rightPanel);
-    return panel;
+        shadedConstraints.gridx = 0;
+        shadedConstraints.gridy = 0;
+        shadedConstraints.gridwidth = GridBagConstraints.REMAINDER;
+        shadedConstraints.fill = GridBagConstraints.HORIZONTAL;
+        panel.add(shadedPanel, shadedConstraints);
+        return panel;
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                new MovieAppGUI();
-            }
-        });
+        SwingUtilities.invokeLater(MovieAppGUI::new);
     }
-
 }
