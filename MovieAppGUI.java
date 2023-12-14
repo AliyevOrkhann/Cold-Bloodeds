@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 public class MovieAppGUI {
     private static JFrame frame;
@@ -63,7 +65,7 @@ public class MovieAppGUI {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                ImageIcon background = new ImageIcon("background-gs7hjuwvv2g0e9fj.jpg");
+                ImageIcon background = new ImageIcon("BackgroundPhotos\\background-gs7hjuwvv2g0e9fj.jpg");
                 g.drawImage(background.getImage(), 0, 0, getWidth(), getHeight(), this);
 
                 g.setColor(new Color(0,0,0,150));
@@ -143,6 +145,53 @@ public class MovieAppGUI {
         usernameField.setPreferredSize(textFieldSize);
         passwordField.setPreferredSize(textFieldSize);
 
+        usernameField.setForeground(Color.GRAY);
+        usernameField.setText("Username");
+        usernameField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (usernameField.getText().equals("Username")) {
+                    usernameField.setText("");
+                    usernameField.setForeground(Color.WHITE);
+            }
+        }
+       
+          
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (usernameField.getText().isEmpty()) {
+                    usernameField.setForeground(Color.GRAY);
+                    usernameField.setText("Username");
+                }
+            }
+        });
+
+        passwordField.setForeground(Color.GRAY);
+        passwordField.setText("Password");
+        passwordField.setEchoChar((char) 0);
+        passwordField.addFocusListener(new FocusListener() {
+             @Override
+            public void focusGained(FocusEvent e) {
+                if (String.valueOf(passwordField.getPassword()).equals("Password")) {
+                    passwordField.setText("");
+                    passwordField.setEchoChar('*');
+                    passwordField.setForeground(Color.WHITE);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if(String.valueOf(passwordField.getPassword()).isEmpty()) {
+                    passwordField.setEchoChar((char) 0);
+                    passwordField.setForeground(Color.GRAY);
+                    passwordField.setText("Password");
+                }
+            }
+        });
+        
+            
+
+        
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -154,6 +203,8 @@ public class MovieAppGUI {
         panel.add(loginButton, gbc);
         gbc.gridy++;
         panel.add(registerButton, gbc);
+
+        
 
         //JLabel registerLabel = new JLabel("Register");
         //registerLabel.setForeground(Color.WHITE);
