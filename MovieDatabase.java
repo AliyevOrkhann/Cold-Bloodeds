@@ -87,6 +87,30 @@ public class MovieDatabase {
         return movieFrom;
     }
 
+    private static List<Movie> sortByTitleAscending(List<Movie> movies){
+        return movies.stream()
+                .sorted((m1,m2)-> (m1.getTitle()).compareTo(m2.getTitle()))
+                .toList();
+    }
+
+    private static List<Movie> sortByTitleDescending(List<Movie> movies){
+        return movies.stream()
+                .sorted((m1,m2)-> (m1.getTitle()).compareTo(m2.getTitle()))
+                .toList();
+    }
+
+    private static List<Movie> sortByYearAscending(List<Movie> movies){
+        return movies.stream()
+                .sorted((m1,m2)-> Integer.compare(m1.getReleaseYear(), m2.getReleaseYear()))
+                .toList();
+    }    
+
+    private static List<Movie> sortByYearDescending(List<Movie> movies){
+        return movies.stream()
+                .sorted((m1,m2)-> Integer.compare(m1.getReleaseYear(), m2.getReleaseYear()))
+                .toList();
+    }    
+
 
     public static List<Movie> loadFromFile(String fileName) {
         List<Movie> loadedMovies = new ArrayList<>();
@@ -118,6 +142,5 @@ public class MovieDatabase {
             System.out.println("Error ocurred while loading from file: " + e.getMessage());
         }
         return loadedMovies;
-    }
-
+    }    
 }
