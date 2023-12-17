@@ -1,7 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
@@ -91,7 +89,7 @@ public class MovieAppGUI {
         centerPanel.add(Box.createGlue(), authPanelConstraints);
 
            
-        //centerPanel.add(authPanel, BorderLayout.EAST);
+        
         mainPanel.add(upperPanel, BorderLayout.NORTH);
         mainPanel.add(centerPanel, BorderLayout.CENTER);
         mainPanel.add(lowerPanel, BorderLayout.SOUTH);
@@ -204,14 +202,6 @@ public class MovieAppGUI {
         gbc.gridy++;
         panel.add(registerButton, gbc);
 
-        
-
-        //JLabel registerLabel = new JLabel("Register");
-        //registerLabel.setForeground(Color.WHITE);
-        //registerLabel.setFont(new Font("Arial", Font.BOLD, 20));
-        
-        //registerLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 180, 0));
-
         JPanel shadedPanel = new JPanel(new BorderLayout()) {
             @Override
             protected void paintComponent(Graphics g) {
@@ -220,7 +210,7 @@ public class MovieAppGUI {
                 g.fillRect(0, 0, getWidth(), getHeight());
             }
         };
-        //shadedPanel.add(registerLabel, BorderLayout.CENTER);
+        
         GridBagConstraints shadedConstraints = new GridBagConstraints();
 
         shadedConstraints.gridx = 0;
