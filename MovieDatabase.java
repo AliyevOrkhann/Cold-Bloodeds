@@ -79,37 +79,73 @@ public class MovieDatabase {
         }
     }
 
-    private static List<Movie> getMoviesFromYear(int year, List<Movie> movies){
+    public static ArrayList<Movie> getMoviesStartingFromYear(int year, ArrayList<Movie> movies){
         var movieFrom = movies.stream()
-                        .filter(n->n.getReleaseYear()==year)
-                        .collect(Collectors.toList());
+                        .filter(n->n.getReleaseYear()>=year)
+                        .collect(Collectors.toCollection(ArrayList::new));
         if(movieFrom.isEmpty())throw new NoSuchElementException("No Movie from "+year+" is found in the database");
         return movieFrom;
     }
 
-    private static List<Movie> sortByTitleAscending(List<Movie> movies){
-        return movies.stream()
-                .sorted((m1,m2)-> (m1.getTitle()).compareTo(m2.getTitle()))
-                .toList();
+    public static ArrayList<Movie> getMovieByTitle(String title, ArrayList<Movie> movies){
+        var movieFrom = movies.stream()
+                        .filter(n->n.getTitle().equals(title))
+                        .collect(Collectors.toCollection(ArrayList::new));
+        if(movieFrom.isEmpty())throw new NoSuchElementException("No Movie named "+title+" is found in the database");
+        return movieFrom;
     }
 
-    private static List<Movie> sortByTitleDescending(List<Movie> movies){
-        return movies.stream()
-                .sorted((m1,m2)-> (m1.getTitle()).compareTo(m2.getTitle()))
-                .toList();
+    public static ArrayList<Movie> getMovieByDirector(String director, ArrayList<Movie> movies){
+        var movieFrom = movies.stream()
+                        .filter(n->n.getDirector().equals(director))
+                        .collect(Collectors.toCollection(ArrayList::new));
+        if(movieFrom.isEmpty())throw new NoSuchElementException("No Movie directed by "+director+" is found in the database");
+        return movieFrom;
     }
 
-    private static List<Movie> sortByYearAscending(List<Movie> movies){
+    public static ArrayList<Movie> sortByTitleAscending(ArrayList<Movie> movies){
+        return movies.stream()
+                .sorted((m1,m2)-> (m1.getTitle()).compareTo(m2.getTitle()))
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    public static ArrayList<Movie> sortByTitleDescending(ArrayList<Movie> movies){
+        return movies.stream()
+                .sorted((m1,m2)-> (m1.getTitle()).compareTo(m2.getTitle()))
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    public static ArrayList<Movie> sortByYearAscending(ArrayList<Movie> movies){
         return movies.stream()
                 .sorted((m1,m2)-> Integer.compare(m1.getReleaseYear(), m2.getReleaseYear()))
-                .toList();
+                .collect(Collectors.toCollection(ArrayList::new));
     }    
 
-    private static List<Movie> sortByYearDescending(List<Movie> movies){
+    public static ArrayList<Movie> sortByYearDescending(ArrayList<Movie> movies){
         return movies.stream()
                 .sorted((m1,m2)-> Integer.compare(m1.getReleaseYear(), m2.getReleaseYear()))
-                .toList();
+                .collect(Collectors.toCollection(ArrayList::new));
     }    
+
+    public static ArrayList<Movie> sortByDirectorAscending(ArrayList<Movie> movies){
+        return movies.stream()
+                .sorted((m1,m2)-> (m1.getDirector()).compareTo(m2.getDirector()))
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    public static ArrayList<Movie> sortByDirectorDescending(ArrayList<Movie> movies){
+        return movies.stream()
+                .sorted((m1,m2)-> (m2.getDirector()).compareTo(m1.getDirector()))
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    public static int calculateTotalWatchTime(List<Movie> movies) {
+        return movies.stream()
+                .mapToInt(Movie::getRunningTime)
+                .sum();
+    }
+
+
 
 
     public static List<Movie> loadFromFile(String fileName) {
