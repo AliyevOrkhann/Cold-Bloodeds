@@ -218,6 +218,32 @@ public class MovieAppGUI {
         shadedConstraints.gridwidth = GridBagConstraints.REMAINDER;
         shadedConstraints.fill = GridBagConstraints.HORIZONTAL;
         panel.add(shadedPanel, shadedConstraints);
+        
+
+        loginButton.addActionListener(e -> {
+            String username = usernameField.getText();
+            String password = String.valueOf(passwordField.getPassword());
+            boolean loggedIn = User.login(username, password);
+
+            if(loggedIn) {
+                JOptionPane.showMessageDialog(frame, "Login successful!");
+            } else {
+                JOptionPane.showMessageDialog(frame, "Invalid username or password");
+            }
+        });
+
+        registerButton.addActionListener(e -> {
+            String username = usernameField.getText();
+            String password = String.valueOf(passwordField.getPassword());
+            boolean registered = User.register(username, password);
+
+            if (registered) {
+                JOptionPane.showMessageDialog(frame, "User registered succesfully!");
+            } else {
+                JOptionPane.showMessageDialog(frame, "User already exits");
+            }
+        });
+
         return panel;
     }
 
