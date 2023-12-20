@@ -224,8 +224,10 @@ public class MovieAppGUI {
             String username = usernameField.getText();
             String password = String.valueOf(passwordField.getPassword());
             boolean loggedIn = User.login(username, password);
+            User currentUser = User.getUserByUsernameAndPassword(username, password);
 
             if(loggedIn) {
+                openUserLoginWindow(currentUser);
                 JOptionPane.showMessageDialog(frame, "Login successful!");
             } else {
                 JOptionPane.showMessageDialog(frame, "Invalid username or password");
@@ -247,6 +249,11 @@ public class MovieAppGUI {
         return panel;
     }
 
+    private static void openUserLoginWindow(User currentUser) {
+        EventQueue.invokeLater(() -> {
+            new UserLoginWindow(currentUser);
+        });
+    }
     public static void main(String[] args) {
         SwingUtilities.invokeLater(MovieAppGUI::new);
     }
