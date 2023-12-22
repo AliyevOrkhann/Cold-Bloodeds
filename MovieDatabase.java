@@ -9,7 +9,7 @@ import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 public class MovieDatabase {
-    private List<Movie> movies;
+    private static List<Movie> movies;
 
     public MovieDatabase() {
         //this.movies = new ArrayList<>();
@@ -22,7 +22,7 @@ public class MovieDatabase {
     }
    
 
-    public void addMovie(Movie m) {
+    public static void addMovie(Movie m) {
         if(movies.contains(m)) {
             System.out.println("----------Movie: " + m.getTitle() + "is already in the database------");
         } else {
@@ -31,7 +31,7 @@ public class MovieDatabase {
         }
     }
 
-    private void saveToFile(Movie m) {
+    public static void saveToFile(Movie m) {
         File path = new File("movies_database.txt");
         try (FileWriter fw = new FileWriter(path, true)) {
             fw.write("Title: " + m.getTitle() + "\n" + "Director: " + m.getDirector() + "\n" + "Release Year: " + 

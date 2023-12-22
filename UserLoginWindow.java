@@ -66,11 +66,13 @@ public class UserLoginWindow {
 
         JButton addMovieButton = new JButton("Add Movie");
         addMovieButton.addActionListener(e -> {
-            addMovieToDatabase(titleField.getText(), directorField.getText(),releaseYearField.getText(), runningTimeField.getText());
+            Movie newMovie = new Movie(titleField.getText(), directorField.getText(), Integer.parseInt(releaseYearField.getText()), Integer.parseInt(runningTimeField.getText()));
+            MovieDatabase.addMovie(newMovie);
             titleField.setText("");
             directorField.setText("");
             releaseYearField.setText("");
             runningTimeField.setText("");
+            updateMovieListPanel();
         });
 
         JPanel inputPanel = new JPanel(new GridLayout(5, 2));
@@ -87,7 +89,6 @@ public class UserLoginWindow {
 
         addMoviePanel.add(inputPanel, BorderLayout.CENTER);
 
-        // Add tabs to the tabbedPane
         tabbedPane.addTab("Movies and Watch List", movieListTabPanel);
         tabbedPane.addTab("Add Movie", addMoviePanel);
 
@@ -95,25 +96,12 @@ public class UserLoginWindow {
         frame.setVisible(true);
     }
 
-    private void addMovieToDatabase(String title, String director, String releaseYear, String runningTime) {
-        // Add the new movie to the database (you may need to validate input)
-        Movie newMovie = new Movie(title, director, Integer.parseInt(releaseYear), Integer.parseInt(runningTime));
-        movieDatabase.addMovie(newMovie);
-
-        // Update the movie list panel
-        updateMovieListPanel();
-
-        
-        // Clear the input fields
-        // You can add more validation and error handling here
-    }
-
     private void updateMovieListPanel() {
         movieListPanel.removeAll();
         List<Movie> movies = movieDatabase.getMovies();
         for (Movie movie : movies) {
             JButton movieButton = new JButton(movie.getTitle());
-            movieButton.addActionListener(e -> showMovieDetails(movie, null)); // Passing null for the user
+            movieButton.addActionListener(e -> showMovieDetails(movie, null));
             movieListPanel.add(movieButton);
             movieButton.setFocusable(true);
         }
