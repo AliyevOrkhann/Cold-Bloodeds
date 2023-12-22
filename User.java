@@ -117,25 +117,4 @@ public class User {
     public String getUsername() {
         return username;
     }
-
-    public static User getUserByUsernameAndPassword(String username2, String password2) {
-        try (BufferedReader reader = new BufferedReader(new FileReader("users_database.txt"))) {
-            String line;
-            while((line = reader.readLine()) != null) {
-                String[] userInfo = line.split(",");
-                if(userInfo.length ==2 && userInfo[0].equals(username2) && userInfo[1].equals(password2)) {
-                    System.out.println("Login success");
-                    return new User(username2, password2);
-                }
-            }
-        } catch (IOException e) {
-            System.out.println("error");
-            e.printStackTrace();
-        }        
-        System.out.println("invalid");
-        return null;
-            
-        }
-    }
-   
-
+}

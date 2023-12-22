@@ -22,3 +22,9 @@ Title: Fight Club
 Director:  David Fincher
 Release Year: 1999
 Running Time: 139 minutes
+
+Title: Valley of the Wolves
+Director: Osman Sinav
+Release Year: 2003
+Running Time: 80 minutes
+
