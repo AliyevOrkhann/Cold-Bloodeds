@@ -6,6 +6,7 @@ import java.awt.event.FocusListener;
 public class MovieAppGUI {
     private static JFrame frame;
     private static JPanel userPanel;
+    private static User currentUser;
 
     public MovieAppGUI() {
         initialize();
@@ -224,11 +225,12 @@ public class MovieAppGUI {
             String username = usernameField.getText();
             String password = String.valueOf(passwordField.getPassword());
             boolean loggedIn = User.login(username, password);
-            User currentUser = User.getUserByUsernameAndPassword(username, password);
+            currentUser = new User(username, password);
 
             if(loggedIn) {
                 openUserLoginWindow(currentUser);
                 JOptionPane.showMessageDialog(frame, "Login successful!");
+                frame.dispose();
             } else {
                 JOptionPane.showMessageDialog(frame, "Invalid username or password");
             }
