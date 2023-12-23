@@ -27,7 +27,6 @@ public class UserLoginWindow {
 
         JTabbedPane tabbedPane = new JTabbedPane();
 
-        // Movie List Tab
         JPanel movieListTabPanel = new JPanel();
         movieListTabPanel.setLayout(new BorderLayout());
 
@@ -39,7 +38,7 @@ public class UserLoginWindow {
         List<Movie> movies = movieDatabase.getMovies();
         for (Movie movie : movies) {
             JButton movieButton = new JButton(movie.getTitle());
-            movieButton.addActionListener(e -> showMovieDetails(movie, currentUser));
+            movieButton.addActionListener(e -> showMovieDetails(movie, currentUser,false));
             movieListPanel.add(movieButton);
             movieButton.setFocusable(true);
         }
@@ -56,7 +55,6 @@ public class UserLoginWindow {
 
         movieListTabPanel.add(rightSplitPane, BorderLayout.CENTER);
 
-        // Add Movie Tab
         JPanel addMoviePanel = new JPanel(new BorderLayout());
 
         JTextField titleField = new JTextField();
@@ -101,7 +99,7 @@ public class UserLoginWindow {
         List<Movie> movies = movieDatabase.getMovies();
         for (Movie movie : movies) {
             JButton movieButton = new JButton(movie.getTitle());
-            movieButton.addActionListener(e -> showMovieDetails(movie, null));
+            movieButton.addActionListener(e -> showMovieDetails(movie, null,false));
             movieListPanel.add(movieButton);
             movieButton.setFocusable(true);
         }
@@ -115,50 +113,55 @@ public class UserLoginWindow {
         for(Movie movie : watchList) {
             JButton movieButton = new JButton(movie.getTitle());
             movieButton.setFocusable(true);
-            movieButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    getCurrentUser().removeFromWatchlist(movie);
-                    updateWatchlistPanel(currentUser);
-                }
-            });
+            movieButton.addActionListener(e -> showMovieDetails(movie, currentUser,true));
             watchlistPanel.add(movieButton);
         }
         watchlistPanel.revalidate();
         watchlistPanel.repaint();
     }
 
-    private void showMovieDetails(Movie movie, User currentUser) {
+    private void showMovieDetails(Movie movie, User currentUser,boolean forWatchlist) {
         detailsPanel.removeAll();
 
         JLabel titleLabel = new JLabel("Title: " + movie.getTitle());
         JLabel directorLabel = new JLabel("Director: " + movie.getDirector());
         JLabel releaseLabel = new JLabel("Release Year: " + movie.getReleaseYear());
         JLabel runningTimeLabel = new JLabel("Running Time: " + movie.getRunningTime() + " minutes");
-
-        JButton addToWatchlistButton = new JButton("Add to Watchlist");
-        addToWatchlistButton.setFocusable(true);
-        addToWatchlistButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                getCurrentUser().addToWatchList(movie);
-                File path = new File("Database/"+getCurrentUser().getUsername()+".dat");
-                try (FileWriter fw = new FileWriter(path, true)) {
-                fw.write(movie.getDetails()+"\n");
-                } catch (Exception exception) {
-                System.out.println("Something went wrong: " + exception.getMessage());
+        if(!forWatchlist){
+            JButton addToWatchlistButton = new JButton("Add to Watchlist");
+            addToWatchlistButton.setFocusable(true);
+            addToWatchlistButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if(currentUser.getWatchList().contains(movie)){
+                        JOptionPane.showMessageDialog(watchlistPanel, "Movie is already in the Watch List");
+                    }
+                    else{
+                        getCurrentUser().addToWatchList(movie);
+                        File path = new File("Database/"+getCurrentUser().getUsername()+".dat");
+                        try (FileWriter fw = new FileWriter(path, true)) {
+                        fw.write(movie.getDetails()+"\n");
+                        } catch (Exception exception) {
+                        System.out.println("Something went wrong: " + exception.getMessage());
+                        }
+                        updateWatchlistPanel(currentUser);   
+                    }
                 }
-                updateWatchlistPanel(currentUser);
-            }
-        });
+            });
+            
+            detailsPanel.add(addToWatchlistButton);
+        }
 
         JButton removeFromWatchlistButton = new JButton("Remove from Watchlist");
         removeFromWatchlistButton.setFocusable(true);
         removeFromWatchlistButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                getCurrentUser().removeFromWatchlist(movie);
-                updateWatchlistPanel(currentUser);
+                if(currentUser.getWatchList().contains(movie)){
+                        getCurrentUser().removeFromWatchlist(movie);
+                        updateWatchlistPanel(currentUser);
+                }
+                else{JOptionPane.showMessageDialog(detailsPanel, "Movie is not in the Watch List");}
             }
         });
 
@@ -166,7 +169,6 @@ public class UserLoginWindow {
         detailsPanel.add(directorLabel);
         detailsPanel.add(releaseLabel);
         detailsPanel.add(runningTimeLabel);
-        detailsPanel.add(addToWatchlistButton);
         detailsPanel.add(removeFromWatchlistButton);
 
         detailsPanel.revalidate();
