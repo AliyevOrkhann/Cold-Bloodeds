@@ -158,7 +158,7 @@ public class MovieDatabase {
                     if (line.startsWith("Title: ")) {
                         title = line.substring(7);
                     } else if (line.startsWith("Director: ")) {
-                        director = line.substring(11);
+                        director = line.substring(10);
                     } else if (line.startsWith("Release Year: ")) {
                         releaseYear = Integer.parseInt(line.substring(14));
                     } else if (line.startsWith("Running Time: ")) {

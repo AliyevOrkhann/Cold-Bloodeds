@@ -1,25 +1,25 @@
 Title: The Godfather
-Director:  Francis Ford Coppola
+Director: Francis Ford Coppola
 Release Year: 1994
 Running Time: 142 minutes
 
 Title: The Dark Knight
-Director:  Christopher Nolan
+Director: Christopher Nolan
 Release Year: 2008
 Running Time: 152 minutes
 
 Title: Blade The Lord of the Rings: The Return of the King
-Director:  Peter Jackson
+Director: Peter Jackson
 Release Year: 2003
 Running Time: 201 minutes
 
 Title: Blade The Matrix
-Director:  Lana Wachowski
+Director: Lana Wachowski
 Release Year: 1999
 Running Time: 136 minutes
 
 Title: Fight Club
-Director:  David Fincher
+Director: David Fincher
 Release Year: 1999
 Running Time: 139 minutes
 
