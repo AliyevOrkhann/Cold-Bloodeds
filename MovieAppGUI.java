@@ -239,13 +239,18 @@ public class MovieAppGUI {
         registerButton.addActionListener(e -> {
             String username = usernameField.getText();
             String password = String.valueOf(passwordField.getPassword());
-            boolean registered = User.register(username, password);
+            try {
+                boolean registered = User.register(username, password);
 
-            if (registered) {
-                JOptionPane.showMessageDialog(frame, "User registered succesfully!");
-            } else {
-                JOptionPane.showMessageDialog(frame, "User already exits");
+                if (registered) {
+                    JOptionPane.showMessageDialog(frame, "User registered succesfully!");
+                } else {
+                    JOptionPane.showMessageDialog(frame, "User already exits");
+                }
+            } catch (IllegalArgumentException er) {
+                JOptionPane.showMessageDialog(frame, er.getMessage());
             }
+
         });
 
         return panel;

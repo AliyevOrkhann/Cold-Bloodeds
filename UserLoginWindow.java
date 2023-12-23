@@ -19,7 +19,7 @@ public class UserLoginWindow {
         this.currentUser = currentUser;
         this.movieDatabase = new MovieDatabase();
 
-        frame = new JFrame(currentUser.getUsername() + " Home Page");
+        frame = new JFrame(currentUser.getUsername().toUpperCase() + "'s Home Page");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 600);
         frame.setLayout(new BorderLayout());
@@ -87,7 +87,7 @@ public class UserLoginWindow {
             try {
                 Movie newMovie = new Movie(titleField.getText(), directorField.getText(),
                         Integer.parseInt(releaseYearField.getText()), Integer.parseInt(runningTimeField.getText()));
-                movieDatabase.addMovie(newMovie);
+                MovieDatabase.addMovie(newMovie);
                 titleField.setText("");
                 directorField.setText("");
                 releaseYearField.setText("");

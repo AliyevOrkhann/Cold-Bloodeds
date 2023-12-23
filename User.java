@@ -26,6 +26,9 @@ public class User {
             return false;
         }
 
+        if(password.length()<6)throw new IllegalArgumentException("Password Length Must Be Greater Than 6");
+        else if(password.equals(username))throw new IllegalArgumentException("Password Cannot Be Same With Username");
+
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("users_database.txt", true))) {
             writer.write(username + "," + password + "\n");
             System.out.println("User registered successfully.");
@@ -117,4 +120,5 @@ public class User {
     public String getUsername() {
         return username;
     }
+    
 }
