@@ -4,8 +4,8 @@ import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class UserLoginWindow {
     private JFrame frame;
@@ -237,7 +237,6 @@ public class UserLoginWindow {
         });
     }
 
-    // Create Filter and Sort Buttons
     private JPanel createFilterSortPanel() {
         JButton filterTitleButton = createStyledButton("Filter by Title");
         filterTitleButton.addActionListener(e -> {
@@ -255,13 +254,26 @@ public class UserLoginWindow {
             }
         });
 
-        JButton filterYearButton = createStyledButton("Filter by Year");
-        filterYearButton.addActionListener(e -> {
+        JButton filterStartingYearButton = createStyledButton("Filter by From Year");
+        filterStartingYearButton.addActionListener(e -> {
             String filterValue = JOptionPane.showInputDialog(frame, "Enter year to filter by:");
             if (filterValue != null && !filterValue.isEmpty()) {
                 try {
                     int year = Integer.parseInt(filterValue);
-                    filterMovies("Release Year", String.valueOf(year));
+                    filterMovies("Starting Release Year", String.valueOf(year));
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(frame, "Please enter a valid year.");
+                }
+            }
+        });
+
+        JButton filterExactYearButton = createStyledButton("Filter by Exact Year");
+        filterExactYearButton.addActionListener(e -> {
+            String filterValue = JOptionPane.showInputDialog(frame, "Enter year to filter by:");
+            if (filterValue != null && !filterValue.isEmpty()) {
+                try {
+                    int year = Integer.parseInt(filterValue);
+                    filterMovies("Exact Release Year", String.valueOf(year));
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(frame, "Please enter a valid year.");
                 }
@@ -288,82 +300,113 @@ public class UserLoginWindow {
             sortMovies("Year Descending");
         });
 
-        JPanel filterSortPanel = new JPanel(new GridLayout(2, 4));
+        JButton sortDirectorAscendingButton = createStyledButton("Sort by Director Ascending");
+        sortDirectorAscendingButton.addActionListener(e -> {
+            sortMovies("Director Ascending");
+        });
+
+        JButton sortDirectorDescendingButton = createStyledButton("Sort by Director Descending");
+        sortDirectorDescendingButton.addActionListener(e -> {
+            sortMovies("Director Descending");
+        });
+
+        JPanel filterSortPanel = new JPanel(new GridLayout(2, 6));
+        filterSortPanel.add(new JLabel(""));
         filterSortPanel.add(filterTitleButton);
         filterSortPanel.add(filterDirectorButton);
-        filterSortPanel.add(filterYearButton);
+        filterSortPanel.add(filterStartingYearButton);
+        filterSortPanel.add(filterExactYearButton);
+        //filterSortPanel.add(new JLabel(""));
+        filterSortPanel.add(new JLabel(""));
         filterSortPanel.add(new JLabel(""));
         filterSortPanel.add(sortTitleAscendingButton);
         filterSortPanel.add(sortTitleDescendingButton);
         filterSortPanel.add(sortYearAscendingButton);
         filterSortPanel.add(sortYearDescendingButton);
+        filterSortPanel.add(sortDirectorAscendingButton);
+        filterSortPanel.add(sortDirectorDescendingButton);
 
         return filterSortPanel;
     }
 
     private void filterMovies(String filterType, String filterValue) {
-    List<Movie> filteredMovies = new ArrayList<>();
+    ArrayList<Movie> filteredMovies = new ArrayList<>();
 
     switch (filterType) {
         case "Title":
-            for (Movie movie : movieDatabase.getMovies()) {
-                if (movie.getTitle().equalsIgnoreCase(filterValue)) {
-                    filteredMovies.add(movie);
-                }
+            try {
+                filteredMovies = MovieDatabase.getMovieByTitle(filterValue, movieDatabase.getMovies());
+            } catch (NoSuchElementException nse) {
+                JOptionPane.showMessageDialog(frame, nse.getMessage());
+                filteredMovies = movieDatabase.getMovies();
             }
             break;
         case "Director":
-            for (Movie movie : movieDatabase.getMovies()) {
-                if (movie.getDirector().equalsIgnoreCase(filterValue)) {
-                    filteredMovies.add(movie);
-                }
+            try {
+                filteredMovies = MovieDatabase.getMovieByDirector(filterValue, movieDatabase.getMovies());
+            } catch (NoSuchElementException nse) {
+                JOptionPane.showMessageDialog(frame, nse.getMessage());
+                filteredMovies = movieDatabase.getMovies();
             }
             break;
-        case "Release Year":
+        case "Starting Release Year":
             try {
                 int year = Integer.parseInt(filterValue);
-                for (Movie movie : movieDatabase.getMovies()) {
-                    if (movie.getReleaseYear() == year) {
-                        filteredMovies.add(movie);
-                    }
-                }
+                filteredMovies = MovieDatabase.getMoviesStartingFromYear(year, movieDatabase.getMovies());
             } catch (NumberFormatException e) {
-                // Handle invalid input
+                System.out.println("ERROR: cannot parse to INTEGER");
+            } catch(NoSuchElementException nse){
+                JOptionPane.showMessageDialog(frame, nse.getMessage());
+                filteredMovies = movieDatabase.getMovies();
+            }
+            break;
+
+        case "Exact Release Year":
+            try {
+                int year = Integer.parseInt(filterValue);
+                filteredMovies = MovieDatabase.getMoviesFromYear(year, movieDatabase.getMovies());
+            } catch (NumberFormatException e) {
+                System.out.println("ERROR: cannot parse to INTEGER");
+            } catch(NoSuchElementException nse){
+                JOptionPane.showMessageDialog(frame, nse.getMessage());
+                filteredMovies = movieDatabase.getMovies();
             }
             break;
         default:
-            // Handle unsupported filter type
     }
 
-    // Update the movie list panel with the filtered movies
     updateMovieListPanel(filteredMovies);
 }
 
 private void sortMovies(String sortType) {
-    List<Movie> sortedMovies = new ArrayList<>(movieDatabase.getMovies());
+    ArrayList<Movie> sortedMovies = new ArrayList<>(movieDatabase.getMovies());
 
     switch (sortType) {
         case "Title Ascending":
-            sortedMovies.sort(Comparator.comparing(Movie::getTitle));
+            sortedMovies = MovieDatabase.sortByTitleAscending(sortedMovies);
             break;
         case "Title Descending":
-            sortedMovies.sort(Comparator.comparing(Movie::getTitle).reversed());
+            sortedMovies = MovieDatabase.sortByTitleDescending(sortedMovies);
             break;
         case "Year Ascending":
-            sortedMovies.sort(Comparator.comparing(Movie::getReleaseYear));
+            sortedMovies = MovieDatabase.sortByYearAscending(sortedMovies);
             break;
         case "Year Descending":
-            sortedMovies.sort(Comparator.comparing(Movie::getReleaseYear).reversed());
+            sortedMovies = MovieDatabase.sortByYearDescending(sortedMovies);
             break;
+        case "Director Ascending":
+            sortedMovies = MovieDatabase.sortByDirectorAscending(sortedMovies);
+            break;
+        case "Director Descending":
+            sortedMovies = MovieDatabase.sortByDirectorDescending(sortedMovies);
+            break;    
         default:
-            // Handle unsupported sort type
+            break;
     }
 
-    // Update the movie list panel with the sorted movies
     updateMovieListPanel(sortedMovies);
 }
 
-// Helper method to update the movie list panel with a list of movies
 private void updateMovieListPanel(List<Movie> movies) {
     movieListPanel.removeAll();
     for (Movie movie : movies) {

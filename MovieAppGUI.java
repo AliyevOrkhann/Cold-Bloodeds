@@ -5,7 +5,6 @@ import java.awt.event.FocusListener;
 
 public class MovieAppGUI {
     private static JFrame frame;
-    private static JPanel userPanel;
     private static User currentUser;
 
     public MovieAppGUI() {
