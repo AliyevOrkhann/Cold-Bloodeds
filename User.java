@@ -60,7 +60,7 @@ public class User {
         return false;
     }
 
-    private static boolean checkUserExists(String username) {
+    public static boolean checkUserExists(String username) {
         try(BufferedReader reader = new BufferedReader (new FileReader("users_database.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
@@ -120,5 +120,8 @@ public class User {
     public String getUsername() {
         return username;
     }
-    
+
+    public void setWatchList(List<Movie> watchList) {
+        this.watchList = watchList;
+    }
 }
