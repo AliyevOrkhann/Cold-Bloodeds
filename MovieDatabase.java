@@ -9,15 +9,15 @@ import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 public class MovieDatabase {
-    private static List<Movie> movies;
+    private static ArrayList<Movie> movies;
 
     public MovieDatabase() {
         //this.movies = new ArrayList<>();
-        this.movies = loadFromFile("movies_database.txt");
+        MovieDatabase.movies = loadFromFile("movies_database.txt");
     }
     
 
-    public List<Movie> getMovies() {
+    public ArrayList<Movie> getMovies() {
         return movies;
     }
    
@@ -83,9 +83,17 @@ public class MovieDatabase {
         var movieFrom = movies.stream()
                         .filter(n->n.getReleaseYear()>=year)
                         .collect(Collectors.toCollection(ArrayList::new));
-        if(movieFrom.isEmpty())throw new NoSuchElementException("No Movie from "+year+" is found in the database");
+        if(movieFrom.isEmpty())throw new NoSuchElementException("No Movie starting from "+year+" is found in the database");
         return movieFrom;
     }
+
+    public static ArrayList<Movie> getMoviesFromYear(int year, ArrayList<Movie> movies) {
+        var movieFrom = movies.stream()
+                        .filter(n->n.getReleaseYear()==year)
+                        .collect(Collectors.toCollection(ArrayList::new));
+        if(movieFrom.isEmpty())throw new NoSuchElementException("No Movie from "+year+" is found in the database");
+        return movieFrom;
+    }    
 
     public static ArrayList<Movie> getMovieByTitle(String title, ArrayList<Movie> movies){
         var movieFrom = movies.stream()
@@ -111,7 +119,7 @@ public class MovieDatabase {
 
     public static ArrayList<Movie> sortByTitleDescending(ArrayList<Movie> movies){
         return movies.stream()
-                .sorted((m1,m2)-> (m1.getTitle()).compareTo(m2.getTitle()))
+                .sorted((m1,m2)-> (m2.getTitle()).compareTo(m1.getTitle()))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
@@ -123,7 +131,7 @@ public class MovieDatabase {
 
     public static ArrayList<Movie> sortByYearDescending(ArrayList<Movie> movies){
         return movies.stream()
-                .sorted((m1,m2)-> Integer.compare(m1.getReleaseYear(), m2.getReleaseYear()))
+                .sorted((m1,m2)-> Integer.compare(m2.getReleaseYear(), m1.getReleaseYear()))
                 .collect(Collectors.toCollection(ArrayList::new));
     }    
 
@@ -139,6 +147,8 @@ public class MovieDatabase {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+
+
     public static int calculateTotalWatchTime(List<Movie> movies) {
         return movies.stream()
                 .mapToInt(Movie::getRunningTime)
@@ -148,8 +158,8 @@ public class MovieDatabase {
 
 
 
-    public static List<Movie> loadFromFile(String fileName) {
-        List<Movie> loadedMovies = new ArrayList<>();
+    public static ArrayList<Movie> loadFromFile(String fileName) {
+        ArrayList<Movie> loadedMovies = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
             String line;
             String title = null, director = null;
@@ -178,5 +188,5 @@ public class MovieDatabase {
             System.out.println("Error ocurred while loading from file: " + e.getMessage());
         }
         return loadedMovies;
-    }    
+    }
 }
