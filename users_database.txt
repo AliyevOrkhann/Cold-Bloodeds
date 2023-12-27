@@ -11,4 +11,3 @@ testUser,testPassword
 existingUser,existingPassword
 babekbb,babek123
 
-aliyev,aliyev123
