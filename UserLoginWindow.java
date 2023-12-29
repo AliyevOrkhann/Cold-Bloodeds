@@ -3,6 +3,7 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -95,6 +96,8 @@ public class UserLoginWindow {
                 updateMovieListPanel();
             } catch (NumberFormatException nfe) {
                 JOptionPane.showMessageDialog(frame, "Please enter valid numbers for year and running time.");
+            } catch(IllegalArgumentException iae){
+                JOptionPane.showMessageDialog(frame, iae.getMessage());
             }
         });
 
@@ -130,7 +133,7 @@ public class UserLoginWindow {
         button.setFocusable(false);
         button.setBorderPainted(true);
         button.setOpaque(true);
-        button.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE)); // White border at the bottom
+        button.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
         return button;
     }
 
@@ -218,7 +221,7 @@ public class UserLoginWindow {
         File path = new File("Database/" + currentUser.getUsername() + ".dat");
         try (FileWriter fw = new FileWriter(path, true)) {
             fw.write(movie.getDetails() + "\n");
-        } catch (Exception exception) {
+        } catch (IOException exception) {
             JOptionPane.showMessageDialog(frame, "Something went wrong: " + exception.getMessage());
         }
     }
@@ -316,7 +319,6 @@ public class UserLoginWindow {
         filterSortPanel.add(filterDirectorButton);
         filterSortPanel.add(filterStartingYearButton);
         filterSortPanel.add(filterExactYearButton);
-        //filterSortPanel.add(new JLabel(""));
         filterSortPanel.add(new JLabel(""));
         filterSortPanel.add(new JLabel(""));
         filterSortPanel.add(sortTitleAscendingButton);

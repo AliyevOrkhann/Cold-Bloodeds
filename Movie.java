@@ -30,7 +30,7 @@ public class Movie{
         this.releaseYear = releaseYear;
     }
     private void setRunningTime(int runningTime) {
-        if(runningTime<=0)throw new IllegalArgumentException("The running time cannot be negative number");
+        if(runningTime<=0)throw new IllegalArgumentException("The running time cannot be zero or negative number");
         this.runningTime = runningTime;
     }
     
