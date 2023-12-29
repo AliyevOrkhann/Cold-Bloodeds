@@ -11,3 +11,5 @@ testUser,testPassword
 existingUser,existingPassword
 babekbb,babek123
 
+Ismayil_Huseynov,Qazwsx123
+Ismayil,1234567
