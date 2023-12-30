@@ -15,7 +15,7 @@ public class MovieDatabase {
         //this.movies = new ArrayList<>();
         MovieDatabase.movies = loadFromFile("movies_database.txt");
     }
-    
+ 
 
     public ArrayList<Movie> getMovies() {
         return movies;
@@ -34,6 +34,16 @@ public class MovieDatabase {
     public static void saveToFile(Movie m) {
         File path = new File("movies_database.txt");
         try (FileWriter fw = new FileWriter(path, true)) {
+            fw.write("Title: " + m.getTitle() + "\n" + "Director: " + m.getDirector() + "\n" + "Release Year: " + 
+            m.getReleaseYear() + "\n" + "Running Time: " + m.getRunningTime() + " minutes" + "\n\n");
+        } catch (Exception e) {
+            System.out.println("Something went wrong: " + e.getMessage());
+        }
+    }
+
+    // Test Case
+    public static void saveToFile(Movie m, File file) {
+        try (FileWriter fw = new FileWriter(file, true)) {
             fw.write("Title: " + m.getTitle() + "\n" + "Director: " + m.getDirector() + "\n" + "Release Year: " + 
             m.getReleaseYear() + "\n" + "Running Time: " + m.getRunningTime() + " minutes" + "\n\n");
         } catch (Exception e) {
@@ -189,4 +199,5 @@ public class MovieDatabase {
         }
         return loadedMovies;
     }
+    
 }
