@@ -42,6 +42,25 @@ public class User {
         }
     }
 
+    // Test Case
+    public static boolean register (String username, String password, File file) {
+        if(checkUserExists(username)) {
+            System.out.println("User already exists. Please choose another username.");
+            return false;
+        }
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
+            writer.write(username + "," + password + "\n");
+            System.out.println("User registered successfully.");
+            String path="DataBase/"+username+".dat";
+            FileOutputStream fos=new FileOutputStream(new File(path));
+            return true;
+        } catch (IOException e) {
+            System.out.println("Error happened during registration");
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public static boolean login(String username, String password) {
         try (BufferedReader reader = new BufferedReader(new FileReader("users_database.txt"))) {
             String line;
