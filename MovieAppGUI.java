@@ -3,14 +3,24 @@ import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
+/**
+ * The MovieAppGUI class represents the graphical user interface for the Movie Management System.
+ * It includes features for user authentication, login, and registration.
+ */
 public class MovieAppGUI {
     private static JFrame frame;
     private static User currentUser;
 
+    /**
+     * Constructs a new MovieAppGUI object and initializes the graphical user interface.
+     */
     public MovieAppGUI() {
         initialize();
     }
 
+    /**
+     * Initializes the graphical user interface.
+     */
     private void initialize() {
         frame = new JFrame("ColdBloodex");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -98,6 +108,11 @@ public class MovieAppGUI {
         frame.setVisible(true);
     }
 
+    /**
+     * Creates the user authentication panel.
+     *
+     * @return The user authentication panel.
+     */
     private static JPanel createUserPanel() {
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setOpaque(false);
@@ -255,11 +270,22 @@ public class MovieAppGUI {
         return panel;
     }
 
+    /**
+     * Opens the user login window.
+     *
+     * @param currentUser The currently logged-in user.
+     */
     private static void openUserLoginWindow(User currentUser) {
         EventQueue.invokeLater(() -> {
             new UserLoginWindow(currentUser);
         });
     }
+
+    /**
+     * The main method to launch the Movie Management System GUI.
+     *
+     * @param args The command line arguments.
+     */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(MovieAppGUI::new);
     }
