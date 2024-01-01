@@ -8,6 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+/**
+ * The UserLoginWindow class represents the main window for the logged-in user in the Movie Management System.
+ * It provides functionality for managing movies, including adding, filtering, sorting, and viewing details.
+ */
 public class UserLoginWindow {
     private JFrame frame;
     private JPanel movieListPanel;
@@ -16,6 +20,11 @@ public class UserLoginWindow {
     private MovieDatabase movieDatabase;
     private User currentUser;
 
+    /**
+     * Constructs a new UserLoginWindow for the given user and initializes the graphical user interface.
+     *
+     * @param currentUser The currently logged-in user.
+     */
     UserLoginWindow(User currentUser) {
         this.currentUser = currentUser;
         this.movieDatabase = new MovieDatabase();
@@ -44,6 +53,12 @@ public class UserLoginWindow {
         frame.setVisible(true);
     }
 
+    /**
+     * Styles the given panel with a titled border.
+     *
+     * @param panel The panel to be styled.
+     * @param title The title for the border.
+     */
     private void stylePanel(JPanel panel, String title) {
         TitledBorder border = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.WHITE), title);
         border.setTitleColor(Color.WHITE);
@@ -52,6 +67,11 @@ public class UserLoginWindow {
         panel.setBackground(Color.BLACK);
     }
 
+    /**
+     * Creates the tab for displaying movie lists, watchlists, and movie details.
+     *
+     * @return The created movie list tab.
+     */
     private JPanel createMovieListTab() {
         JPanel movieListTab = new JPanel(new BorderLayout());
 
@@ -70,6 +90,11 @@ public class UserLoginWindow {
         return movieListTab;
     }
 
+    /**
+     * Creates the tab for adding movies to the system.
+     *
+     * @return The created add movie tab.
+     */
     private JPanel createAddMovieTab() {
         JTextField titleField = new JTextField(20);
         styleTextField(titleField);
@@ -119,12 +144,23 @@ public class UserLoginWindow {
         return addMoviePanel;
     }
 
+    /**
+     * Styles the given text field with specific background, foreground, and font settings.
+     *
+     * @param textField The text field to be styled.
+     */
     private void styleTextField(JTextField textField) {
         textField.setBackground(Color.BLACK);
         textField.setForeground(new Color(173, 216, 230));
         textField.setFont(new Font("Arial", Font.PLAIN, 12));
     }
 
+    /**
+     * Creates a styled button with specific appearance settings.
+     *
+     * @param text The text to be displayed on the button.
+     * @return The created styled button.
+     */
     private JButton createStyledButton(String text) {
         JButton button = new JButton(text);
         button.setBackground(Color.BLACK);
@@ -137,6 +173,9 @@ public class UserLoginWindow {
         return button;
     }
 
+    /**
+     * Populates the movie list panel with movie buttons.
+     */
     private void populateMovieList() {
         movieListPanel.removeAll();
         List<Movie> movies = movieDatabase.getMovies();
@@ -149,6 +188,9 @@ public class UserLoginWindow {
         movieListPanel.repaint();
     }
 
+    /**
+     * Updates the watchlist panel with buttons for movies in the user's watchlist.
+     */
     private void updateWatchlistPanel() {
         watchlistPanel.removeAll();
         List<Movie> watchList = currentUser.getWatchList();
@@ -161,6 +203,11 @@ public class UserLoginWindow {
         watchlistPanel.repaint();
     }
 
+    /**
+     * Displays details of the selected movie in the details panel.
+     *
+     * @param movie The selected movie.
+     */
     private void showMovieDetails(Movie movie) {
         detailsPanel.removeAll();
 
@@ -193,11 +240,21 @@ public class UserLoginWindow {
         detailsPanel.repaint();
     }
 
+    /**
+     * Styles the given label with specific foreground color and font settings.
+     *
+     * @param label The label to be styled.
+     */
     private void styleLabel(JLabel label) {
         label.setForeground(Color.WHITE);
         label.setFont(new Font("Arial", Font.PLAIN, 12));
     }
 
+    /**
+     * Adds the selected movie to the user's watchlist and updates the watchlist panel.
+     *
+     * @param movie The movie to be added to the watchlist.
+     */
     private void addToWatchlist(Movie movie) {
         if (!currentUser.getWatchList().contains(movie)) {
             currentUser.addToWatchList(movie);
@@ -208,6 +265,11 @@ public class UserLoginWindow {
         }
     }
 
+    /**
+     * Removes the selected movie from the user's watchlist and updates the watchlist panel.
+     *
+     * @param movie The movie to be removed from the watchlist.
+     */
     private void removeFromWatchlist(Movie movie) {
         if (currentUser.getWatchList().contains(movie)) {
             currentUser.removeFromWatchlist(movie);
@@ -217,6 +279,11 @@ public class UserLoginWindow {
         }
     }
 
+    /**
+     * Saves the selected movie to the user's watchlist file.
+     *
+     * @param movie The movie to be saved to the watchlist file.
+     */
     private void saveWatchlistToFile(Movie movie) {
         File path = new File("Database/" + currentUser.getUsername() + ".dat");
         try (FileWriter fw = new FileWriter(path, true)) {
@@ -226,6 +293,11 @@ public class UserLoginWindow {
         }
     }
 
+    /**
+     * Updates the movie list panel based on the filtered movies.
+     *
+     * @param movies The list of filtered movies to be displayed.
+     */
     private void updateMovieListPanel() {
         SwingUtilities.invokeLater(() -> {
             movieListPanel.removeAll();
@@ -240,6 +312,11 @@ public class UserLoginWindow {
         });
     }
 
+    /**
+     * Creates the filter and sort panel for managing movie lists.
+     *
+     * @return The created filter and sort panel.
+     */
     private JPanel createFilterSortPanel() {
         JButton filterTitleButton = createStyledButton("Filter by Title");
         filterTitleButton.addActionListener(e -> {
@@ -331,84 +408,102 @@ public class UserLoginWindow {
         return filterSortPanel;
     }
 
+    /**
+     * Filters movies based on the given filter type and value.
+     *
+     * @param filterType  The type of filter (e.g., Title, Director, Starting Release Year, Exact Release Year).
+     * @param filterValue The value to filter by.
+     */
     private void filterMovies(String filterType, String filterValue) {
     ArrayList<Movie> filteredMovies = new ArrayList<>();
 
-    switch (filterType) {
-        case "Title":
-            try {
-                filteredMovies = MovieDatabase.getMovieByTitle(filterValue, movieDatabase.getMovies());
-            } catch (NoSuchElementException nse) {
-                JOptionPane.showMessageDialog(frame, nse.getMessage());
-                filteredMovies = movieDatabase.getMovies();
-            }
-            break;
-        case "Director":
-            try {
-                filteredMovies = MovieDatabase.getMovieByDirector(filterValue, movieDatabase.getMovies());
-            } catch (NoSuchElementException nse) {
-                JOptionPane.showMessageDialog(frame, nse.getMessage());
-                filteredMovies = movieDatabase.getMovies();
-            }
-            break;
-        case "Starting Release Year":
-            try {
-                int year = Integer.parseInt(filterValue);
-                filteredMovies = MovieDatabase.getMoviesStartingFromYear(year, movieDatabase.getMovies());
-            } catch (NumberFormatException e) {
-                System.out.println("ERROR: cannot parse to INTEGER");
-            } catch(NoSuchElementException nse){
-                JOptionPane.showMessageDialog(frame, nse.getMessage());
-                filteredMovies = movieDatabase.getMovies();
-            }
-            break;
+        switch (filterType) {
+            case "Title":
+                try {
+                    filteredMovies = MovieDatabase.getMovieByTitle(filterValue, movieDatabase.getMovies());
+                } catch (NoSuchElementException nse) {
+                    JOptionPane.showMessageDialog(frame, nse.getMessage());
+                    filteredMovies = movieDatabase.getMovies();
+                }
+                break;
+            case "Director":
+                try {
+                    filteredMovies = MovieDatabase.getMovieByDirector(filterValue, movieDatabase.getMovies());
+                } catch (NoSuchElementException nse) {
+                    JOptionPane.showMessageDialog(frame, nse.getMessage());
+                    filteredMovies = movieDatabase.getMovies();
+                }
+                break;
+            case "Starting Release Year":
+                try {
+                    int year = Integer.parseInt(filterValue);
+                    filteredMovies = MovieDatabase.getMoviesStartingFromYear(year, movieDatabase.getMovies());
+                } catch (NumberFormatException e) {
+                    System.out.println("ERROR: cannot parse to INTEGER");
+                } catch(NoSuchElementException nse){
+                    JOptionPane.showMessageDialog(frame, nse.getMessage());
+                    filteredMovies = movieDatabase.getMovies();
+                }
+                break;
 
-        case "Exact Release Year":
-            try {
-                int year = Integer.parseInt(filterValue);
-                filteredMovies = MovieDatabase.getMoviesFromYear(year, movieDatabase.getMovies());
-            } catch (NumberFormatException e) {
-                System.out.println("ERROR: cannot parse to INTEGER");
-            } catch(NoSuchElementException nse){
-                JOptionPane.showMessageDialog(frame, nse.getMessage());
-                filteredMovies = movieDatabase.getMovies();
-            }
-            break;
-        default:
-    }
-
+            case "Exact Release Year":
+                try {
+                    int year = Integer.parseInt(filterValue);
+                    filteredMovies = MovieDatabase.getMoviesFromYear(year, movieDatabase.getMovies());
+                } catch (NumberFormatException e) {
+                    System.out.println("ERROR: cannot parse to INTEGER");
+                } catch(NoSuchElementException nse){
+                    JOptionPane.showMessageDialog(frame, nse.getMessage());
+                    filteredMovies = movieDatabase.getMovies();
+                }
+                break;
+            default:
+        }
     updateMovieListPanel(filteredMovies);
-}
-
-private void sortMovies(String sortType) {
-    ArrayList<Movie> sortedMovies = new ArrayList<>(movieDatabase.getMovies());
-
-    switch (sortType) {
-        case "Title Ascending":
-            sortedMovies = MovieDatabase.sortByTitleAscending(sortedMovies);
-            break;
-        case "Title Descending":
-            sortedMovies = MovieDatabase.sortByTitleDescending(sortedMovies);
-            break;
-        case "Year Ascending":
-            sortedMovies = MovieDatabase.sortByYearAscending(sortedMovies);
-            break;
-        case "Year Descending":
-            sortedMovies = MovieDatabase.sortByYearDescending(sortedMovies);
-            break;
-        case "Director Ascending":
-            sortedMovies = MovieDatabase.sortByDirectorAscending(sortedMovies);
-            break;
-        case "Director Descending":
-            sortedMovies = MovieDatabase.sortByDirectorDescending(sortedMovies);
-            break;    
-        default:
-            break;
     }
 
-    updateMovieListPanel(sortedMovies);
-}
 
+    /**
+     * Sorts movies based on the given sort type.
+     *
+     * @param sortType The type of sort (e.g., Title Ascending, Title Descending, Year Ascending, Year Descending).
+     */
+    private void sortMovies(String sortType) {
+        ArrayList<Movie> sortedMovies = new ArrayList<>(movieDatabase.getMovies());
+
+        switch (sortType) {
+            case "Title Ascending":
+                sortedMovies = MovieDatabase.sortByTitleAscending(sortedMovies);
+                break;
+            case "Title Descending":
+                sortedMovies = MovieDatabase.sortByTitleDescending(sortedMovies);
+                break;
+            case "Year Ascending":
+                sortedMovies = MovieDatabase.sortByYearAscending(sortedMovies);
+                break;
+            case "Year Descending":
+                sortedMovies = MovieDatabase.sortByYearDescending(sortedMovies);
+                break;
+            case "Director Ascending":
+                sortedMovies = MovieDatabase.sortByDirectorAscending(sortedMovies);
+                break;
+            case "Director Descending":
+                sortedMovies = MovieDatabase.sortByDirectorDescending(sortedMovies);
+                break;    
+            default:
+                break;
+        }
+
+        updateMovieListPanel(sortedMovies);
+    }
+/**
+ * Updates the movie list panel based on the provided list of movies. Clears the existing movie buttons
+ * in the panel and creates new buttons for each movie in the given list. Each button is styled and
+ * configured to display the movie title, and an action listener is added to show the details of the
+ * corresponding movie when clicked.
+ *
+ * @param movies The list of movies to be displayed in the movie list panel.
+ */
 private void updateMovieListPanel(List<Movie> movies) {
     movieListPanel.removeAll();
     for (Movie movie : movies) {
