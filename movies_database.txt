@@ -32,14 +32,3 @@ Title: Salmon
 Director: Richard
 Release Year: 1987
 Running Time: 123 minutes
-
-Title: The Godfather2
-Director: Francis Ford Coppola
-Release Year: 1996
-Running Time: 142 minutes
-
-Title: ewdjewdjhd
-Director: cwhdwkjd
-Release Year: 1999
-Running Time: 145 minutes
-

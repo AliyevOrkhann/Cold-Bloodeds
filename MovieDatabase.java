@@ -40,7 +40,7 @@ public class MovieDatabase {
      */
     public static void addMovie(Movie m) {
         if(movies.contains(m)) {
-            System.out.println("----------Movie: " + m.getTitle() + "is already in the database------");
+            throw new AlreadyInListException("Movie: "+m.getTitle()+" is already in database");
         } else {
             movies.add(m);
             saveToFile(m);
@@ -94,7 +94,7 @@ public class MovieDatabase {
      *
      * @param m The movie to be removed.
      */
-    public void removeMovie(Movie m){
+    public static void removeMovie(Movie m){
         movies.remove(m);
         File path=new File("movies_database.txt");
         File temp=new File("movies_backup.txt");
@@ -121,6 +121,7 @@ public class MovieDatabase {
             System.out.println("Something went wrong: "+e.getMessage());
         } 
         finally{
+            MovieDatabase.movies = loadFromFile("movies_database.txt");
             temp.delete();
         }
     }

@@ -128,6 +128,8 @@ public class UserLoginWindow {
                 JOptionPane.showMessageDialog(frame, "Please enter valid numbers for year and running time.");
             } catch(IllegalArgumentException iae){
                 JOptionPane.showMessageDialog(frame, iae.getMessage());
+            } catch(AlreadyInListException ale){
+                JOptionPane.showMessageDialog(frame, ale.getMessage());
             }
         });
 
@@ -244,7 +246,10 @@ public class UserLoginWindow {
         removeFromWatchlistButton.setBorder(lowerBorder);
 
         JButton removeMovieButton = createStyledButton("Remove the Movie");
-        //removeMovieButton.addActionListener(e -> removeMovie(movie));
+        removeMovieButton.addActionListener(e -> {
+            MovieDatabase.removeMovie(movie);
+            updateMovieListPanel();
+        });
         removeMovieButton.setBackground(new Color(173, 216, 230));
         removeMovieButton.setForeground(Color.BLACK);
 
@@ -259,6 +264,10 @@ public class UserLoginWindow {
         detailsPanel.revalidate();
         detailsPanel.repaint();
     }
+
+    // private void removeMovie(Movie movie) {
+        
+    // }
 
     /**
      * Styles the given label with specific foreground color and font settings.
