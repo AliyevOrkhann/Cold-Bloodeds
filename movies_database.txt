@@ -1,13 +1,3 @@
-Title: The Godfather
-Director: Francis Ford Coppola
-Release Year: 1994
-Running Time: 142 minutes
-
-Title: The Dark Knight
-Director: Christopher Nolan
-Release Year: 2008
-Running Time: 152 minutes
-
 Title: The Lord of the Rings: The Return of the King
 Director: Peter Jackson
 Release Year: 2003
@@ -28,7 +18,4 @@ Director: Osman Sinav
 Release Year: 2003
 Running Time: 80 minutes
 
-Title: Salmon
-Director: Richard
-Release Year: 1987
-Running Time: 123 minutes
+null
