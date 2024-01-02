@@ -22,7 +22,7 @@ public class MovieAppGUI {
      * Initializes the graphical user interface.
      */
     private void initialize() {
-        frame = new JFrame("ColdBloodex");
+        frame = new JFrame("ColdBloodex - Login/Registration Page");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1200, 800);
 
@@ -37,15 +37,20 @@ public class MovieAppGUI {
                 g.setColor(new Color(173,216,230));
                 g.setFont(new Font("Arial", Font.BOLD, 30));
 
-                int textPadding = 40;
-                int textYCoordinate = getHeight() / 4 + textPadding;
-                g.drawString("ColdBloodex                                                                                   Login / Register ", 30, textYCoordinate);
+                String text = "ColdBloodex - Your world of movies";
+                FontMetrics fm = g.getFontMetrics();
+                int textWidth = fm.stringWidth(text);
+
+                int x = (getWidth() - textWidth) / 2;
+                int padding = 40;
+                int y = (getHeight() / 3) + padding;
+
+                g.drawString(text, x, y);
             }
         };
         upperPanel.setPreferredSize(new Dimension(frame.getWidth(), frame.getHeight() / 5));
         
 
-        
         JPanel lowerPanel = new JPanel(new BorderLayout()) {
             @Override
             protected void paintComponent(Graphics g) {
@@ -73,7 +78,7 @@ public class MovieAppGUI {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                ImageIcon background = new ImageIcon("BackgroundPhotos\\background-gs7hjuwvv2g0e9fj.jpg");
+                ImageIcon background = new ImageIcon("BackgroundPhotos\\Background-movie-collection.jpg");
                 g.drawImage(background.getImage(), 0, 0, getWidth(), getHeight(), this);
 
                 g.setColor(new Color(0,0,0,150));
@@ -82,8 +87,6 @@ public class MovieAppGUI {
         };
         centerPanel.setLayout(new GridBagLayout());
         centerPanel.setOpaque(true);
-
-        
 
         JPanel authPanel = createUserPanel();
         GridBagConstraints authPanelConstraints = new GridBagConstraints();
@@ -98,8 +101,6 @@ public class MovieAppGUI {
         centerPanel.add(authPanel, authPanelConstraints);
         centerPanel.add(Box.createGlue(), authPanelConstraints);
 
-           
-        
         mainPanel.add(upperPanel, BorderLayout.NORTH);
         mainPanel.add(centerPanel, BorderLayout.CENTER);
         mainPanel.add(lowerPanel, BorderLayout.SOUTH);
@@ -169,7 +170,6 @@ public class MovieAppGUI {
             }
         }
        
-          
             @Override
             public void focusLost(FocusEvent e) {
                 if (usernameField.getText().isEmpty()) {
@@ -183,7 +183,8 @@ public class MovieAppGUI {
         passwordField.setText("Password");
         passwordField.setEchoChar((char) 0);
         passwordField.addFocusListener(new FocusListener() {
-             @Override
+             
+            @Override
             public void focusGained(FocusEvent e) {
                 if (String.valueOf(passwordField.getPassword()).equals("Password")) {
                     passwordField.setText("");
@@ -202,9 +203,6 @@ public class MovieAppGUI {
             }
         });
         
-            
-
-        
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -216,24 +214,6 @@ public class MovieAppGUI {
         panel.add(loginButton, gbc);
         gbc.gridy++;
         panel.add(registerButton, gbc);
-
-        JPanel shadedPanel = new JPanel(new BorderLayout()) {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                g.setColor(new Color(0,0,0,150));
-                g.fillRect(0, 0, getWidth(), getHeight());
-            }
-        };
-        
-        GridBagConstraints shadedConstraints = new GridBagConstraints();
-
-        shadedConstraints.gridx = 0;
-        shadedConstraints.gridy = 0;
-        shadedConstraints.gridwidth = GridBagConstraints.REMAINDER;
-        shadedConstraints.fill = GridBagConstraints.HORIZONTAL;
-        panel.add(shadedPanel, shadedConstraints);
-        
 
         loginButton.addActionListener(e -> {
             String username = usernameField.getText();
@@ -266,7 +246,6 @@ public class MovieAppGUI {
             }
 
         });
-
         return panel;
     }
 
