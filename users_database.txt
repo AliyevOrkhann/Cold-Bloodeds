@@ -1,7 +1,0 @@
-babekbb,babek123
-test1,test123
-testUser,testPassword
-babek,babek123
-Ismayil Huseynov,Ozon56
-Ismayil,Ozon56
-Vasif,qwert6
