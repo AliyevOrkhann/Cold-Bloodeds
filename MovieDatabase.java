@@ -8,20 +8,36 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
+/**
+ * The MovieDatabase class represents a database for managing a collection of movies.
+ * It provides methods for adding/removing movies, retrieving movie details, and performing various operations using streams.
+ * The movie data is loaded from and saved to a file for persistence.
+ */
 public class MovieDatabase {
     private static ArrayList<Movie> movies;
 
+    /**
+     * Constructs a MovieDatabase object. Loads movies from the file "movies_database.txt" during initialization.
+     */
     public MovieDatabase() {
-        this.movies = new ArrayList<>();
         MovieDatabase.movies = loadFromFile("movies_database.txt");
     }
  
 
+    /**
+     * Gets the list of movies in the database.
+     *
+     * @return The list of movies.
+     */
     public ArrayList<Movie> getMovies() {
         return movies;
     }
    
-
+    /**
+     * Adds a movie to the database. If the movie already exists, it prints a message indicating that the movie is already in the database.
+     *
+     * @param m The movie to be added.
+     */
     public static void addMovie(Movie m) {
         if(movies.contains(m)) {
             System.out.println("----------Movie: " + m.getTitle() + "is already in the database------");
@@ -31,6 +47,11 @@ public class MovieDatabase {
         }
     }
 
+    /**
+     * Saves a movie to the file "movies_database.txt".
+     *
+     * @param m The movie to be saved.
+     */
     public static void saveToFile(Movie m) {
         File path = new File("movies_database.txt");
         try (FileWriter fw = new FileWriter(path, true)) {
@@ -41,6 +62,11 @@ public class MovieDatabase {
         }
     }
 
+    /**
+     * Saves a movie to the file "file".
+     *
+     * @param m The movie to be saved.
+     */
     // Test Case
     public static void saveToFile(Movie m, File file) {
         try (FileWriter fw = new FileWriter(file, true)) {
@@ -51,6 +77,11 @@ public class MovieDatabase {
         }
     }
 
+    /**
+     * Retrieves and prints details of a given movie.
+     *
+     * @param m The movie to retrieve details for.
+     */
     public void retrieveMovie(Movie m){
         System.out.println("Title: "+m.getTitle());
         System.out.println("Director: "+m.getDirector());
@@ -58,6 +89,11 @@ public class MovieDatabase {
         System.out.println("Running Time: "+m.getRunningTime()+" minutes");
     }
   
+    /**
+     * Removes a movie from the database and updates the file "movies_database.txt" accordingly.
+     *
+     * @param m The movie to be removed.
+     */
     public void removeMovie(Movie m){
         movies.remove(m);
         File path=new File("movies_database.txt");
@@ -89,6 +125,17 @@ public class MovieDatabase {
         }
     }
 
+
+     /**
+     * Provides advanced operations for filtering movies based on release year.
+     * Retrieves a list of movies released on or after the specified year.
+     *
+     * @param year   The minimum release year to filter movies.
+     * @param movies The list of movies to filter.
+     * @return A filtered list of movies.
+     * @throws NoSuchElementException If no movie from the specified year is found in the database.
+     */
+
     public static ArrayList<Movie> getMoviesStartingFromYear(int year, ArrayList<Movie> movies){
         var movieFrom = movies.stream()
                         .filter(n->n.getReleaseYear()>=year)
@@ -97,6 +144,14 @@ public class MovieDatabase {
         return movieFrom;
     }
 
+    /**
+     * Retrieves a list of movies released from the specified year.
+     *
+     * @param year   The minimum release year to filter movies.
+     * @param movies The list of movies to filter.
+     * @return A filtered list of movies.
+     * @throws NoSuchElementException If no movie from the specified year is found in the database.
+     */
     public static ArrayList<Movie> getMoviesFromYear(int year, ArrayList<Movie> movies) {
         var movieFrom = movies.stream()
                         .filter(n->n.getReleaseYear()==year)
@@ -105,6 +160,14 @@ public class MovieDatabase {
         return movieFrom;
     }    
 
+    /**
+     * Retrieves a list of movies with the specified title.
+     *
+     * @param title  The title to filter movies.
+     * @param movies The list of movies to filter.
+     * @return A filtered list of movies.
+     * @throws NoSuchElementException If no movie with the specified title is found in the database.
+     */
     public static ArrayList<Movie> getMovieByTitle(String title, ArrayList<Movie> movies){
         var movieFrom = movies.stream()
                         .filter(n->n.getTitle().equals(title))
@@ -113,6 +176,14 @@ public class MovieDatabase {
         return movieFrom;
     }
 
+    /**
+     * Retrieves a list of movies directed by the specified director.
+     *
+     * @param director The director's name to filter movies.
+     * @param movies   The list of movies to filter.
+     * @return A filtered list of movies.
+     * @throws NoSuchElementException If no movie directed by the specified director is found in the database.
+     */
     public static ArrayList<Movie> getMovieByDirector(String director, ArrayList<Movie> movies){
         var movieFrom = movies.stream()
                         .filter(n->n.getDirector().equals(director))
@@ -121,36 +192,72 @@ public class MovieDatabase {
         return movieFrom;
     }
 
+    /**
+     * Sorts movies in ascending order based on their titles.
+     *
+     * @param movies The list of movies to be sorted.
+     * @return A sorted list of movies.
+     */
     public static ArrayList<Movie> sortByTitleAscending(ArrayList<Movie> movies){
         return movies.stream()
                 .sorted((m1,m2)-> (m1.getTitle()).compareTo(m2.getTitle()))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    /**
+     * Sorts movies in descending order based on their titles.
+     *
+     * @param movies The list of movies to be sorted.
+     * @return A sorted list of movies.
+     */
     public static ArrayList<Movie> sortByTitleDescending(ArrayList<Movie> movies){
         return movies.stream()
                 .sorted((m1,m2)-> (m2.getTitle()).compareTo(m1.getTitle()))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    /**
+     * Sorts movies in ascending order based on their release years.
+     *
+     * @param movies The list of movies to be sorted.
+     * @return A sorted list of movies.
+     */
     public static ArrayList<Movie> sortByYearAscending(ArrayList<Movie> movies){
         return movies.stream()
                 .sorted((m1,m2)-> Integer.compare(m1.getReleaseYear(), m2.getReleaseYear()))
                 .collect(Collectors.toCollection(ArrayList::new));
     }    
 
+    /**
+     * Sorts movies in descending order based on their release years.
+     *
+     * @param movies The list of movies to be sorted.
+     * @return A sorted list of movies.
+     */
     public static ArrayList<Movie> sortByYearDescending(ArrayList<Movie> movies){
         return movies.stream()
                 .sorted((m1,m2)-> Integer.compare(m2.getReleaseYear(), m1.getReleaseYear()))
                 .collect(Collectors.toCollection(ArrayList::new));
     }    
 
+    /**
+     * Sorts movies in ascending order based on their directors' names.
+     *
+     * @param movies The list of movies to be sorted.
+     * @return A sorted list of movies.
+     */
     public static ArrayList<Movie> sortByDirectorAscending(ArrayList<Movie> movies){
         return movies.stream()
                 .sorted((m1,m2)-> (m1.getDirector()).compareTo(m2.getDirector()))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    /**
+     * Sorts movies in descending order based on their directors' names.
+     *
+     * @param movies The list of movies to be sorted.
+     * @return A sorted list of movies.
+     */
     public static ArrayList<Movie> sortByDirectorDescending(ArrayList<Movie> movies){
         return movies.stream()
                 .sorted((m1,m2)-> (m2.getDirector()).compareTo(m1.getDirector()))
@@ -159,6 +266,12 @@ public class MovieDatabase {
 
 
 
+    /**
+     * Calculates the total watch time of the movies in the given list.
+     *
+     * @param movies The list of movies.
+     * @return The total watch time in minutes.
+     */
     public static int calculateTotalWatchTime(List<Movie> movies) {
         return movies.stream()
                 .mapToInt(Movie::getRunningTime)
@@ -167,7 +280,12 @@ public class MovieDatabase {
 
 
 
-
+    /**
+     * Loads movies from a file and returns a list of Movie objects.
+     *
+     * @param fileName The name of the file to load movies from.
+     * @return The list of loaded movies.
+     */
     public static ArrayList<Movie> loadFromFile(String fileName) {
         ArrayList<Movie> loadedMovies = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
