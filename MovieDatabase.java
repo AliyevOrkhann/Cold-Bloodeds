@@ -96,7 +96,7 @@ public class MovieDatabase {
      */
     public static void removeMovie(Movie m){
         movies.remove(m);
-        updateFile("movie_database.txt",m);
+        updateFile("movies_database.txt",m);
     }
 
     private static void updateFile(String filePath, Movie m) {
