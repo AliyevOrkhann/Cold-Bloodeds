@@ -265,10 +265,6 @@ public class UserLoginWindow {
         detailsPanel.repaint();
     }
 
-    // private void removeMovie(Movie movie) {
-        
-    // }
-
     /**
      * Styles the given label with specific foreground color and font settings.
      *
@@ -421,8 +417,8 @@ public class UserLoginWindow {
 
         JButton totalWatchTimeButton = createStyledButton("Show Watch Time of Watchlist");
         totalWatchTimeButton.addActionListener(e -> {
-            //int totalWatchTime = calculateTotalWatchTime(currentUser.getWatchList());
-            //JOptionPane.showMessageDialog(frame, "Total watch time of movies in watchlist: " + totalWatchTime + " minutes");
+            int totalWatchTime = MovieDatabase.calculateTotalWatchTime(currentUser.getWatchList());
+            JOptionPane.showMessageDialog(frame, "Total watch time of movies in watchlist: " + totalWatchTime + " minutes");
         });
         
 
