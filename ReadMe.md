@@ -30,7 +30,26 @@ The Online Movie Database Management system is a Java-based designed for managin
 - 'User.java': Manages user data and authentication
 - 'MovieDatabase.java': Handles the collection of movie objects.
 - 'MovieAppGUI.java': Main class for the GUI application.
+- 'UserLoginWindow.java': Enables to browse through movies, filter and sort movies, as well as to manage watchlist
 - 'Database/': Text files storing movie and user data.
+
+## Team Contributions
+### Team Member Responsibilities
+
+- **Orkhan Aliyev**: 
+  - Responsible for developing `MovieDatabase.java` and `Movie.java`, along with their respective methods.
+  - Took charge of writing comprehensive JavaDoc for the project.
+- **Ismayil Huseynov**: 
+  - Focused on `MovieAppGUI.java` and `UserLoginWindow.java`, implementing the graphical user interface.
+  - Assisted in code organization and refactoring, ensuring code efficiency and readability.
+- **Babek Aliyev**: 
+  - Handled `User.java` and was in charge of testing, including `MovieDatabaseTest` and `UserTest`.
+  - Played a key role in designing data storage strategies for the application.
+
+### Collaborative Effort
+While each team member had specific responsibilities, the development of the project was a collaborative effort. All members actively worked across different sections of the codebase, enhancing and providing constructive feedback on each other's code. This collaborative approach ensured a well-rounded and robust application, with each member contributing to various aspects beyond their primary responsibilities.
+
+
 
 ## Implementation Details
 ### Movie Class
