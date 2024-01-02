@@ -8,12 +8,12 @@ Director: Christopher Nolan
 Release Year: 2008
 Running Time: 152 minutes
 
-Title: Blade The Lord of the Rings: The Return of the King
+Title: The Lord of the Rings: The Return of the King
 Director: Peter Jackson
 Release Year: 2003
 Running Time: 201 minutes
 
-Title: Blade The Matrix
+Title: The Matrix
 Director: Lana Wachowski
 Release Year: 1999
 Running Time: 136 minutes
@@ -32,4 +32,14 @@ Title: Salmon
 Director: Richard
 Release Year: 1987
 Running Time: 123 minutes
+
+Title: The Godfather2
+Director: Francis Ford Coppola
+Release Year: 1996
+Running Time: 142 minutes
+
+Title: ewdjewdjhd
+Director: cwhdwkjd
+Release Year: 1999
+Running Time: 145 minutes
 

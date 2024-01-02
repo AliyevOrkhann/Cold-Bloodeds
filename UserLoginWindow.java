@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.io.File;
@@ -46,7 +47,7 @@ public class UserLoginWindow {
         updateWatchlistPanel();
 
         JTabbedPane tabbedPane = new JTabbedPane();
-        tabbedPane.addTab("Movies and Watch List", createMovieListTab());
+        tabbedPane.addTab("Movies and Watchlist", createMovieListTab());
         tabbedPane.addTab("Add Movie", createAddMovieTab());
 
         frame.add(tabbedPane, BorderLayout.CENTER);
@@ -109,6 +110,10 @@ public class UserLoginWindow {
         styleTextField(runningTimeField);
 
         JButton addMovieButton = createStyledButton("Add Movie");
+        addMovieButton.setBackground(new Color(173, 216, 230));
+        addMovieButton.setForeground(Color.BLACK);
+        addMovieButton.setFont(new Font("Arial", Font.BOLD, 20));
+
         addMovieButton.addActionListener(e -> {
             try {
                 Movie newMovie = new Movie(titleField.getText(), directorField.getText(),
@@ -133,7 +138,7 @@ public class UserLoginWindow {
         inputPanel.add(directorField);
         inputPanel.add(new JLabel("Release Year:"));
         inputPanel.add(releaseYearField);
-        inputPanel.add(new JLabel("Running Time:"));
+        inputPanel.add(new JLabel("Running Time (in minutes):"));
         inputPanel.add(runningTimeField);
         inputPanel.add(new JLabel(""));
         inputPanel.add(addMovieButton);
@@ -225,9 +230,23 @@ public class UserLoginWindow {
 
         JButton addToWatchlistButton = createStyledButton("Add to Watchlist");
         addToWatchlistButton.addActionListener(e -> addToWatchlist(movie));
+        addToWatchlistButton.setBackground(Color.WHITE);
+        addToWatchlistButton.setForeground(Color.BLACK);
+
+        Border lowerBorder = BorderFactory.createMatteBorder(0, 0, 2, 0, Color.BLACK);
+        addToWatchlistButton.setBorder(lowerBorder);
 
         JButton removeFromWatchlistButton = createStyledButton("Remove from Watchlist");
         removeFromWatchlistButton.addActionListener(e -> removeFromWatchlist(movie));
+        removeFromWatchlistButton.setBackground(Color.WHITE);
+        removeFromWatchlistButton.setForeground(Color.BLACK);
+        
+        removeFromWatchlistButton.setBorder(lowerBorder);
+
+        JButton removeMovieButton = createStyledButton("Remove the Movie");
+        //removeMovieButton.addActionListener(e -> removeMovie(movie));
+        removeMovieButton.setBackground(new Color(173, 216, 230));
+        removeMovieButton.setForeground(Color.BLACK);
 
         detailsPanel.add(titleLabel);
         detailsPanel.add(directorLabel);
@@ -235,6 +254,7 @@ public class UserLoginWindow {
         detailsPanel.add(runningTimeLabel);
         detailsPanel.add(addToWatchlistButton);
         detailsPanel.add(removeFromWatchlistButton);
+        detailsPanel.add(removeMovieButton);
 
         detailsPanel.revalidate();
         detailsPanel.repaint();
@@ -261,7 +281,7 @@ public class UserLoginWindow {
             saveWatchlistToFile(movie);
             updateWatchlistPanel();
         } else {
-            JOptionPane.showMessageDialog(frame, "Movie is already in the Watch List");
+            JOptionPane.showMessageDialog(frame, "Movie is already in the Watchlist");
         }
     }
 
@@ -275,7 +295,7 @@ public class UserLoginWindow {
             currentUser.removeFromWatchlist(movie);
             updateWatchlistPanel();
         } else {
-            JOptionPane.showMessageDialog(frame, "Movie is not in the Watch List");
+            JOptionPane.showMessageDialog(frame, "Movie is not in the Watchlist");
         }
     }
 
