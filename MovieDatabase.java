@@ -96,33 +96,35 @@ public class MovieDatabase {
      */
     public static void removeMovie(Movie m){
         movies.remove(m);
-        File path=new File("movies_database.txt");
-        File temp=new File("movies_backup.txt");
-        try (FileWriter fw=new FileWriter(temp);BufferedReader br=new BufferedReader(new FileReader(path))) {
-            String line;
-            while((line=br.readLine())!=null){
-               if((line.contains("Title: " + m.getTitle()))){
-                    for(int i=0;i<5;i++){
-                        line=br.readLine();
-                    }
-               }
-               fw.write(line+"\n");
-            }
-        } catch (Exception e) {
-            System.out.println("Something went wrong: "+e.getMessage());
-        } 
-        try (FileWriter fw=new FileWriter(path);BufferedReader br=new BufferedReader(new FileReader(temp))) {
-            String line;
-            while((line=br.readLine())!=null){
-               fw.write(line+"\n");
+        updateFile("movie_database.txt",m);
+    }
 
+    private static void updateFile(String filePath, Movie m) {
+        File path = new File(filePath);
+        List<String> lines = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                if (line.contains("Title: " + m.getTitle())) {
+                    // Skip the next 4 lines
+                    for (int i = 0; i < 4; i++) {
+                        br.readLine();
+                    }
+                } else {
+                    lines.add(line);
+                }
             }
-        } catch (Exception e) {
-            System.out.println("Something went wrong: "+e.getMessage());
-        } 
-        finally{
-            MovieDatabase.movies = loadFromFile("movies_database.txt");
-            temp.delete();
+        } catch (IOException e) {
+            System.out.println("Something went wrong: " + e.getMessage());
+        }
+
+        try (FileWriter fw = new FileWriter(path)) {
+            for (String line : lines) {
+                fw.write(line + "\n");
+            }
+        } catch (IOException e) {
+            System.out.println("Something went wrong: " + e.getMessage());
         }
     }
 
