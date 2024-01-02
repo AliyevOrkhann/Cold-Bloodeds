@@ -419,6 +419,13 @@ public class UserLoginWindow {
             sortMovies("Director Descending");
         });
 
+        JButton totalWatchTimeButton = createStyledButton("Show Watch Time of Watchlist");
+        totalWatchTimeButton.addActionListener(e -> {
+            //int totalWatchTime = calculateTotalWatchTime(currentUser.getWatchList());
+            //JOptionPane.showMessageDialog(frame, "Total watch time of movies in watchlist: " + totalWatchTime + " minutes");
+        });
+        
+
         JPanel filterSortPanel = new JPanel(new GridLayout(2, 6));
         filterSortPanel.add(new JLabel(""));
         filterSortPanel.add(filterTitleButton);
@@ -427,13 +434,15 @@ public class UserLoginWindow {
         filterSortPanel.add(filterExactYearButton);
         filterSortPanel.add(new JLabel(""));
         filterSortPanel.add(new JLabel(""));
+        filterSortPanel.add(totalWatchTimeButton);
         filterSortPanel.add(sortTitleAscendingButton);
         filterSortPanel.add(sortTitleDescendingButton);
         filterSortPanel.add(sortYearAscendingButton);
         filterSortPanel.add(sortYearDescendingButton);
         filterSortPanel.add(sortDirectorAscendingButton);
         filterSortPanel.add(sortDirectorDescendingButton);
-
+        
+        
         return filterSortPanel;
     }
 
