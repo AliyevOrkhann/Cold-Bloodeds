@@ -1,34 +1,10 @@
-Title: The Godfather
-Director: Francis Ford Coppola
-Release Year: 1994
-Running Time: 142 minutes
-
-Title: The Dark Knight
-Director: Christopher Nolan
-Release Year: 2008
-Running Time: 152 
-
-Title: The Lord of the Rings: The Return of the King
-Director: Peter Jackson
-Release Year: 2003
-Running Time: 201 minutes
-
-Title: The Matrix
-Director: Lana Wachowski
-Release Year: 1999
-Running Time: 136 minutes
-
-Title: Fight Club
-Director: David Fincher
-Release Year: 1999
-Running Time: 139 minutes
-
 Title: Valley of the Wolves
 Director: Osman Sinav
 Release Year: 2003
 Running Time: 80 minutes
 
-Title: Salmon
-Director: Richard
-Release Year: 1987
-Running Time: 123 minutes
+Title: Godfather
+Director: Claus Smith
+Release Year: 2022
+Running Time: 45 minutes
+
